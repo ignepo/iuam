@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">PerfApp</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_recap_fragment">Hello Recap fragment</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_abdotime_fragment">Hello abdoTime fragment</string>
 </resources>
