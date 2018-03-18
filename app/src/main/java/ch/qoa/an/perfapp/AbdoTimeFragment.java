@@ -1,6 +1,7 @@
 package ch.qoa.an.perfapp;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,9 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+
+import java.util.ArrayList;
 
 
 /**
@@ -34,6 +42,7 @@ public class AbdoTimeFragment extends Fragment {
     View myView;
     private Button goRecap;
     GraphView graph;
+    PieChart pieChart;
 
     private OnFragmentInteractionListener mListener;
 
@@ -89,6 +98,10 @@ public class AbdoTimeFragment extends Fragment {
             }
         });
 
+
+        //-----------------------------------------------------------------------------------
+        // Graphique ligne
+        //-----------------------------------------------------------------------------------
         graph = myView.findViewById(R.id.graph);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
                 new DataPoint(0, 1),
@@ -96,6 +109,40 @@ public class AbdoTimeFragment extends Fragment {
                 new DataPoint(2, 3)
         });
         graph.addSeries(series);
+
+
+        //-----------------------------------------------------------------------------------
+        // Graphique Piechart
+        //-----------------------------------------------------------------------------------
+        pieChart=myView.findViewById(R.id.piechart);
+        pieChart.setUsePercentValues(true);
+        pieChart.getDescription().setEnabled(false);
+        pieChart.setExtraOffsets(5, 10, 5, 5);
+
+        pieChart.setDragDecelerationFrictionCoef(0.95f);
+
+        pieChart.setDrawHoleEnabled(true);
+        pieChart.setHoleColor(Color.WHITE);
+        pieChart.setTransparentCircleRadius(61f);
+
+        ArrayList<PieEntry> yValues = new ArrayList<>();
+        yValues.add(new PieEntry(43f, "partyA"));
+        yValues.add(new PieEntry(23f, "partyb"));
+        yValues.add(new PieEntry(14f, "partyc"));
+        yValues.add(new PieEntry(35f, "partyd"));
+        yValues.add(new PieEntry(40f, "partye"));
+        yValues.add(new PieEntry(23f, "partyf"));
+
+        PieDataSet dataSet = new PieDataSet(yValues,"country");
+        dataSet.setSliceSpace(3f);
+        dataSet.setSelectionShift(5f);
+        dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+
+        PieData data = new PieData((dataSet));
+        data.setValueTextSize(10f);
+        data.setValueTextColor(Color.YELLOW);
+
+        pieChart.setData(data);
 
 
 
