@@ -16,8 +16,6 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.ArrayList;
 
@@ -25,12 +23,12 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link AbdoTimeFragment.OnFragmentInteractionListener} interface
+ * {@link GlobalFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link AbdoTimeFragment#newInstance} factory method to
+ * Use the {@link GlobalFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AbdoTimeFragment extends Fragment {
+public class GlobalFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -40,13 +38,12 @@ public class AbdoTimeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     View myView;
-    private Button goRecap;
-    GraphView graph;
+    private Button button;
     PieChart pieChart;
 
     private OnFragmentInteractionListener mListener;
 
-    public AbdoTimeFragment() {
+    public GlobalFragment() {
         // Required empty public constructor
     }
 
@@ -56,11 +53,11 @@ public class AbdoTimeFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment AbdoTimeFragment.
+     * @return A new instance of fragment GlobalFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AbdoTimeFragment newInstance(String param1, String param2) {
-        AbdoTimeFragment fragment = new AbdoTimeFragment();
+    public static GlobalFragment newInstance(String param1, String param2) {
+        GlobalFragment fragment = new GlobalFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -81,34 +78,53 @@ public class AbdoTimeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        if(myView == null){
-            myView = inflater.inflate(R.layout.fragment_abdo_time, container, false);
-        }
+        myView=inflater.inflate(R.layout.fragment_global, container, false);
 
         //-----------------------------------------------------------------------------------
         // Ajout listener
         //-----------------------------------------------------------------------------------
-        goRecap = myView.findViewById(R.id.button2);
-        goRecap.setOnClickListener(new View.OnClickListener() {
+        button = myView.findViewById(R.id.button3);
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(mListener != null){
-                    mListener.onAbdoTimeFragmentInteraction(1);
+                    mListener.onGlobalFragmentInteraction(1);
                 }
             }
         });
 
+        //-----------------------------------------------------------------------------------
+        // Graphique Piechart
+        //-----------------------------------------------------------------------------------
+        pieChart=myView.findViewById(R.id.piechart);
+        pieChart.setUsePercentValues(true);
+        pieChart.getDescription().setEnabled(false);
+        pieChart.setExtraOffsets(5, 10, 5, 5);
 
-        //-----------------------------------------------------------------------------------
-        // Graphique ligne
-        //-----------------------------------------------------------------------------------
-        graph = myView.findViewById(R.id.graph);
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
-                new DataPoint(0, 1),
-                new DataPoint(1, 5),
-                new DataPoint(2, 3)
-        });
-        graph.addSeries(series);
+        pieChart.setDragDecelerationFrictionCoef(0.95f);
+
+        pieChart.setDrawHoleEnabled(true);
+        pieChart.setHoleColor(Color.WHITE);
+        pieChart.setTransparentCircleRadius(61f);
+
+        ArrayList<PieEntry> yValues = new ArrayList<>();
+        yValues.add(new PieEntry(43f, "partyA"));
+        yValues.add(new PieEntry(23f, "partyb"));
+        yValues.add(new PieEntry(14f, "partyc"));
+        yValues.add(new PieEntry(35f, "partyd"));
+        yValues.add(new PieEntry(40f, "partye"));
+        yValues.add(new PieEntry(23f, "partyf"));
+
+        PieDataSet dataSet = new PieDataSet(yValues,"country");
+        dataSet.setSliceSpace(3f);
+        dataSet.setSelectionShift(5f);
+        dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+
+        PieData data = new PieData((dataSet));
+        data.setValueTextSize(10f);
+        data.setValueTextColor(Color.YELLOW);
+
+        pieChart.setData(data);
 
         return myView;
     }
@@ -116,7 +132,7 @@ public class AbdoTimeFragment extends Fragment {
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Integer uri) {
         if (mListener != null) {
-            mListener.onAbdoTimeFragmentInteraction(uri);
+            mListener.onGlobalFragmentInteraction(uri);
         }
     }
 
@@ -149,6 +165,6 @@ public class AbdoTimeFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onAbdoTimeFragmentInteraction(Integer uri);
+        void onGlobalFragmentInteraction(Integer uri);
     }
 }

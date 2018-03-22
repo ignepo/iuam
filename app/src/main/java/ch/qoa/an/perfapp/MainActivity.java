@@ -9,10 +9,12 @@ import android.os.Bundle;
 public class MainActivity
         extends AppCompatActivity
         implements RecapFragment.OnFragmentInteractionListener,
-        AbdoTimeFragment.OnFragmentInteractionListener{
+        AbdoTimeFragment.OnFragmentInteractionListener,
+        GlobalFragment.OnFragmentInteractionListener{
 
     RecapFragment recapFragment;
     AbdoTimeFragment abdotimeFragment;
+    GlobalFragment globalFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +23,7 @@ public class MainActivity
 
         recapFragment = new RecapFragment();
         abdotimeFragment = new AbdoTimeFragment();
+        globalFragment = new GlobalFragment();
 
         FragmentTransaction fragmentTransaction =
                 getSupportFragmentManager().beginTransaction();
@@ -47,7 +50,7 @@ public class MainActivity
 
     @Override
     public void onRecapFragmentInteraction(Integer uri) {
-        callFragment(abdotimeFragment, "AbdoTime");
+        callFragment(globalFragment, "Global");
         //detailFragment.updateElement(itemAtPosition);
         //callFragment(detailFragment, getString(R.string.toolbarTitleDetail));
     }
@@ -55,6 +58,13 @@ public class MainActivity
     @Override
     public void onAbdoTimeFragmentInteraction(Integer uri) {
         callFragment(recapFragment, "Recap");
+        //detailFragment.updateElement(itemAtPosition);
+        //callFragment(detailFragment, getString(R.string.toolbarTitleDetail));
+    }
+
+    @Override
+    public void onGlobalFragmentInteraction(Integer uri) {
+        callFragment(abdotimeFragment, "AbdoTime");
         //detailFragment.updateElement(itemAtPosition);
         //callFragment(detailFragment, getString(R.string.toolbarTitleDetail));
     }

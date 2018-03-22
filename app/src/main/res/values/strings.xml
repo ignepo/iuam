@@ -6,4 +6,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_abdotime_fragment">Hello abdoTime fragment</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_global_fragment">Hello global fragment</string>
 </resources>
