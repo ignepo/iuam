@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1027004431667",
+    "firebase_url": "https://iuamandroid.firebaseio.com",
+    "project_id": "iuamandroid",
+    "storage_bucket": "iuamandroid.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1027004431667:android:8c9ec0dc8977d658",
+        "android_client_info": {
+          "package_name": "ch.qoa.an.perfapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1027004431667-9bmog5nb3049ho885mb3ncmre2r9hi44.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFYjhk8OgFQ03O9Rs1SQ1TkrrhkpxaYwU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
