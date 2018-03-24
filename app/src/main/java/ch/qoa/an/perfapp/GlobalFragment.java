@@ -5,19 +5,26 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.jjoe64.graphview.GraphView;
 
 import java.util.ArrayList;
+
+import static android.content.ContentValues.TAG;
 
 
 /**
@@ -28,17 +35,29 @@ import java.util.ArrayList;
  * Use the {@link GlobalFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class GlobalFragment extends Fragment {
+//implements OnStreetViewPanoramaReadyCallback
+public class GlobalFragment extends Fragment implements OnChartValueSelectedListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    String TAG = "Test";
+
+    //70r0-0kLNDWmRIOukJSNBrTPRlP
+    public static final int[] COLORS_PERFAPP = {
+            Color.rgb(159, 89, 198),
+            Color.rgb(230, 96, 152),
+            Color.rgb(255, 255, 107),
+            Color.rgb(179, 240, 100)
+    };
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     View myView;
     private Button button;
+    private TextView text;
     PieChart pieChart;
 
     private OnFragmentInteractionListener mListener;
@@ -97,37 +116,102 @@ public class GlobalFragment extends Fragment {
         // Graphique Piechart
         //-----------------------------------------------------------------------------------
         pieChart=myView.findViewById(R.id.piechart);
-        pieChart.setUsePercentValues(true);
-        pieChart.getDescription().setEnabled(false);
-        pieChart.setExtraOffsets(5, 10, 5, 5);
+        pieChart.setTouchEnabled(true);
+        pieChart.setUsePercentValues(false); //Converti en pourcentage
+        pieChart.getDescription().setEnabled(false); //Text dans le chart
+        //pieChart.setDrawEntryLabels(false);
+        pieChart.setDrawEntryLabels(true);//Text dans le chart
+        pieChart.setEntryLabelColor(Color.rgb(33, 33, 33));
+        pieChart.setEntryLabelTextSize(20);
+        //pieChart.setExtraOffsets(5, 10, 5, 5);
+        pieChart.setExtraOffsets(10, 0, 10, 0); //Centrage du cercle dans la zone
+        pieChart.setHoleRadius(20);
 
         pieChart.setDragDecelerationFrictionCoef(0.95f);
 
         pieChart.setDrawHoleEnabled(true);
-        pieChart.setHoleColor(Color.WHITE);
-        pieChart.setTransparentCircleRadius(61f);
+        pieChart.setHoleColor(Color.BLACK);
+        pieChart.setTransparentCircleRadius(30f); //transparence du cercle
+        //pieChart.setTransparentCircleRadius(0f);
 
         ArrayList<PieEntry> yValues = new ArrayList<>();
-        yValues.add(new PieEntry(43f, "partyA"));
-        yValues.add(new PieEntry(23f, "partyb"));
-        yValues.add(new PieEntry(14f, "partyc"));
-        yValues.add(new PieEntry(35f, "partyd"));
-        yValues.add(new PieEntry(40f, "partye"));
-        yValues.add(new PieEntry(23f, "partyf"));
+        yValues.add(new PieEntry(43f,"Abdo")); //x=0 dans higlight
+        yValues.add(new PieEntry(23f, "Dorseaux"));//x=1 dans higlight
+        yValues.add(new PieEntry(67f, "Corde"));//x=2 dans higlight
+        yValues.add(new PieEntry(35f, "Squat"));//x=3 dans higlight
+        //yValues.add(new PieEntry(40f, "partye"));
+        //yValues.add(new PieEntry(23f, "partyf"));
 
-        PieDataSet dataSet = new PieDataSet(yValues,"country");
-        dataSet.setSliceSpace(3f);
+        PieDataSet dataSet = new PieDataSet(yValues,"");
+        dataSet.setSliceSpace(5f);
         dataSet.setSelectionShift(5f);
-        dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+        //dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+        dataSet.setColors(COLORS_PERFAPP);
+
 
         PieData data = new PieData((dataSet));
-        data.setValueTextSize(10f);
-        data.setValueTextColor(Color.YELLOW);
+        data.setValueTextSize(21f);
+        //data.setValueTextColor(Color.TRANSPARENT);
+        data.setValueTextColor(Color.rgb(33, 33, 33));
 
         pieChart.setData(data);
+        pieChart.getLegend().setEnabled(false); //Enlever la légende
+        pieChart.setOnChartValueSelectedListener(this);
+
+        text = myView.findViewById(R.id.sport);
 
         return myView;
     }
+
+    @Override
+    public void onValueSelected(Entry e, Highlight h) {
+        Log.i(TAG, "onValueSelected e: *****************"+e);
+        Log.i(TAG, "onValueSelected h: *****************"+h.getX());
+
+        //text = myView.findViewById(R.id.sport);
+
+        switch((int)(h.getX())) {
+            case 0:
+                Log.i(TAG, "onValueSelected : Abdos");
+                text.setText("ABDOS");
+                break;
+            case 1:
+                Log.i(TAG, "onValueSelected : Dorseaux");
+                text.setText("DORSEAUX");
+                break;
+            case 2:
+                Log.i(TAG, "onValueSelected : Corde");
+                text.setText("CORDE");
+                break;
+            case 3:
+                Log.i(TAG, "onValueSelected : Squats");
+                text.setText("SQUATS");
+                break;
+            default:
+                Log.i(TAG, "onValueSelected : Other");
+        }
+
+    }
+
+    @Override
+    public void onNothingSelected() {
+
+    }
+/*
+    public interface OnChartValueSelectedListener {
+        //
+         // Called when a value has been selected inside the chart.
+         //
+         //@param e The selected Entry.
+         // @param h The corresponding highlight object that contains information
+         //about the highlighted position
+         //
+        public void onValueSelected(Entry e, Highlight h);
+        //
+         // Called when nothing has been selected or an "un-select" has been made.
+         //
+        public void onNothingSelected();
+    }*/
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Integer uri) {

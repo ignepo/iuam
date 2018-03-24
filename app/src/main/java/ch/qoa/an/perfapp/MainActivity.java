@@ -27,7 +27,7 @@ public class MainActivity
 
         FragmentTransaction fragmentTransaction =
                 getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.fragment_container, recapFragment);
+        fragmentTransaction.add(R.id.fragment_container, globalFragment);
         fragmentTransaction.commit();
 
 
