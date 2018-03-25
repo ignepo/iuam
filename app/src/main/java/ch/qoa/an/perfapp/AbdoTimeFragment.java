@@ -17,6 +17,7 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.firebase.auth.FirebaseAuth;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
@@ -105,12 +106,14 @@ public class AbdoTimeFragment extends Fragment {
         //-----------------------------------------------------------------------------------
         // Ajout listener
         //-----------------------------------------------------------------------------------
-        goLogin = myView.findViewById(R.id.buttonlogin);
+        goLogin = myView.findViewById(R.id.buttonLogout);
         goLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Firebase sign out
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                mAuth.signOut();
                 startActivity(MainActivity.intentLogin);
-
             }
         });
 
