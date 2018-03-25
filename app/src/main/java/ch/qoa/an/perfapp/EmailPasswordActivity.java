@@ -17,6 +17,7 @@
 package ch.qoa.an.perfapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -147,11 +148,24 @@ public class EmailPasswordActivity extends BaseActivity implements
                     }
                 });
         // [END sign_in_with_email]
+
+        // Login effectué, démarrage des fonctions de sports
+        MainActivity.logged = true;
+        startActivity(MainActivity.intentAct);
+    }
+
+    public void getSignOut() {
+        signOut();
     }
 
     private void signOut() {
+        MainActivity.logged = false;
         mAuth.signOut();
         updateUI(null);
+
+        // Redémarrage de l'activité de login
+        Intent intentLogin = new Intent(this, EmailPasswordActivity.class);
+        startActivity(MainActivity.intentLogin);
     }
 
     private void sendEmailVerification() {

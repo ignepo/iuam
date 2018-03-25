@@ -17,6 +17,8 @@ public class MainActivity
     AbdoTimeFragment abdotimeFragment;
     GlobalFragment globalFragment;
     public static Intent intentLogin;
+    public static Intent intentAct;
+    public static boolean logged = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +34,13 @@ public class MainActivity
         fragmentTransaction.add(R.id.fragment_container, globalFragment);
         fragmentTransaction.commit();
 
-         intentLogin = new Intent(this, EmailPasswordActivity.class);
+        // Préparation pour l'activité des utilisateurs connectés
+        intentAct = new Intent(this, MainActivity.class);
 
+        // Démarrage de l'activité de login
+        intentLogin = new Intent(this, EmailPasswordActivity.class);
+        if(!logged)
+            startActivity(MainActivity.intentLogin);
 
         //profileFragment = new ProfileFragment();
         //favoritesFragment = new FavoritesFragment();
