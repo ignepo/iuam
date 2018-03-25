@@ -2,12 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ch.qoa.an.perfapp.GlobalFragment">
+    tools:context="ch.qoa.an.perfapp.GlobalFragment"
+    android:background="@color/colorDark">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
+        android:background="@color/colorDark"
         android:orientation="vertical">
 
         <!-- TODO: Update blank fragment layout -->
@@ -23,8 +25,14 @@
             android:text="Button" />
 
         <com.github.mikephil.charting.charts.PieChart
-            android:layout_width="300dip"
-            android:layout_height="200dip"
-            android:id="@+id/piechart" />
+            android:id="@+id/piechart"
+            android:layout_width="match_parent"
+            android:layout_height="400dip" />
+
+        <TextView
+            android:id="@+id/sport"
+            android:textColor="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
     </LinearLayout>
 </FrameLayout>

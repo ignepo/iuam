@@ -7,4 +7,9 @@
     <color name="grey_100">#F5F5F5</color>
     <color name="grey_300">#E0E0E0</color>
     <color name="grey_500">#9E9E9E</color>
+
+    <color name="colorPrimary4">#00bcd4</color>
+    <color name="colorPrimaryDark4">#0097a7</color>
+    <color name="colorAccent4">#f2fe71</color>
+    <color name="colorDark">#212121</color>
 </resources>
