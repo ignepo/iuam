@@ -1,5 +1,6 @@
 package ch.qoa.an.perfapp;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -15,6 +16,7 @@ public class MainActivity
     RecapFragment recapFragment;
     AbdoTimeFragment abdotimeFragment;
     GlobalFragment globalFragment;
+    public static Intent intentLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,8 @@ public class MainActivity
                 getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.fragment_container, globalFragment);
         fragmentTransaction.commit();
+
+         intentLogin = new Intent(this, EmailPasswordActivity.class);
 
 
         //profileFragment = new ProfileFragment();

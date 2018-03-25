@@ -1,9 +1,11 @@
 package ch.qoa.an.perfapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +43,7 @@ public class AbdoTimeFragment extends Fragment {
     private String mParam2;
     View myView;
     private Button goRecap;
+    private Button goLogin;
     GraphView graph;
     PieChart pieChart;
 
@@ -95,6 +98,19 @@ public class AbdoTimeFragment extends Fragment {
                 if(mListener != null){
                     mListener.onAbdoTimeFragmentInteraction(1);
                 }
+            }
+        });
+
+        // TODO Enlever le bouton de test
+        //-----------------------------------------------------------------------------------
+        // Ajout listener
+        //-----------------------------------------------------------------------------------
+        goLogin = myView.findViewById(R.id.buttonlogin);
+        goLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(MainActivity.intentLogin);
+
             }
         });
 
