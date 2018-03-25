@@ -45,11 +45,24 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
     String TAG = "Test";
 
     //70r0-0kLNDWmRIOukJSNBrTPRlP
-    public static final int[] COLORS_PERFAPP = {
+    /*public static final int[] COLORS_PERFAPP = {
             Color.rgb(159, 89, 198),
             Color.rgb(230, 96, 152),
             Color.rgb(255, 255, 107),
             Color.rgb(179, 240, 100)
+    };*/
+    /*public static final int[] COLORS_PERFAPP = {
+            Color.rgb(242, 254, 113),
+            Color.rgb(0, 151, 167),
+            Color.rgb(0, 188, 212),
+            Color.rgb(0, 0, 0)
+    };*/
+
+    public static final int[] COLORS_PERFAPP = {
+            Color.rgb(241, 3, 138), //#f1038a
+            Color.rgb(148, 16, 231), //#9410e7
+            Color.rgb(61, 33, 233),//#3d21e9
+            Color.rgb(7, 200, 227)//#07C8E3
     };
 
     // TODO: Rename and change types of parameters
@@ -102,7 +115,7 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
         //-----------------------------------------------------------------------------------
         // Ajout listener
         //-----------------------------------------------------------------------------------
-        button = myView.findViewById(R.id.button3);
+        /*button = myView.findViewById(R.id.button3);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,7 +123,7 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
                     mListener.onGlobalFragmentInteraction(1);
                 }
             }
-        });
+        });*/
 
         //-----------------------------------------------------------------------------------
         // Graphique Piechart
@@ -122,7 +135,7 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
         //pieChart.setDrawEntryLabels(false);
         pieChart.setDrawEntryLabels(true);//Text dans le chart
         pieChart.setEntryLabelColor(Color.rgb(33, 33, 33));
-        pieChart.setEntryLabelTextSize(20);
+        pieChart.setEntryLabelTextSize(15);
         //pieChart.setExtraOffsets(5, 10, 5, 5);
         pieChart.setExtraOffsets(10, 0, 10, 0); //Centrage du cercle dans la zone
         pieChart.setHoleRadius(20);
@@ -130,8 +143,9 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
         pieChart.setDragDecelerationFrictionCoef(0.95f);
 
         pieChart.setDrawHoleEnabled(true);
-        pieChart.setHoleColor(Color.BLACK);
-        pieChart.setTransparentCircleRadius(30f); //transparence du cercle
+        //pieChart.setHoleColor(Color.BLACK);
+        pieChart.setHoleColor(Color.DKGRAY);
+        pieChart.setTransparentCircleRadius(35f); //transparence du cercle
         //pieChart.setTransparentCircleRadius(0f);
 
         ArrayList<PieEntry> yValues = new ArrayList<>();
@@ -152,7 +166,8 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
         PieData data = new PieData((dataSet));
         data.setValueTextSize(21f);
         //data.setValueTextColor(Color.TRANSPARENT);
-        data.setValueTextColor(Color.rgb(33, 33, 33));
+        //data.setValueTextColor(Color.rgb(33, 33, 33));
+        data.setValueTextColor(Color.WHITE);
 
         pieChart.setData(data);
         pieChart.getLegend().setEnabled(false); //Enlever la légende
@@ -167,7 +182,7 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
     public void onValueSelected(Entry e, Highlight h) {
         Log.i(TAG, "onValueSelected e: *****************"+e);
         Log.i(TAG, "onValueSelected h: *****************"+h.getX());
-
+        mListener.onGlobalFragmentInteraction((int)(h.getX()));
         //text = myView.findViewById(R.id.sport);
 
         switch((int)(h.getX())) {

@@ -7,10 +7,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
@@ -45,8 +47,9 @@ public class AbdoTimeFragment extends Fragment {
     View myView;
     private Button goRecap;
     private Button goLogin;
+    private TextView textSport;
     GraphView graph;
-    PieChart pieChart;
+    Integer setSport;
 
     private OnFragmentInteractionListener mListener;
 
@@ -102,6 +105,24 @@ public class AbdoTimeFragment extends Fragment {
             }
         });
 
+        textSport = myView.findViewById(R.id.textSport);
+        switch(setSport) {
+            case 0:
+                textSport.setText("ABDOS");
+                break;
+            case 1:
+                textSport.setText("DORSEAUX");
+                break;
+            case 2:
+                textSport.setText("CORDE");
+                break;
+            case 3:
+                textSport.setText("SQUATS");
+                break;
+            default:
+                //Do Something
+        }
+
         // TODO Enlever le bouton de test
         //-----------------------------------------------------------------------------------
         // Ajout listener
@@ -154,6 +175,10 @@ public class AbdoTimeFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    public void setSport(Integer sport) {
+        setSport = sport;
     }
 
     /**

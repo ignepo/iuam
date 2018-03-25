@@ -2,27 +2,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ch.qoa.an.perfapp.GlobalFragment"
-    android:background="@color/colorDark">
+    tools:context="ch.qoa.an.perfapp.GlobalFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
-        android:background="@color/colorDark"
         android:orientation="vertical">
 
         <!-- TODO: Update blank fragment layout -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/hello_global_fragment" />
-
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Button" />
+            android:gravity="center_vertical|center_horizontal|center"
+            android:text="@string/hello_global_fragment"
+            android:textColor="@color/colorAccent"
+            android:textSize="30dip" />
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/piechart"

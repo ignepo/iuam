@@ -8,7 +8,7 @@
     <string name="hello_abdotime_fragment">Hello abdoTime fragment</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_global_fragment">Hello global fragment</string>
+    <string name="hello_global_fragment">Comparison of sports</string>
 
     <!-- Firebase Auth String -->
     <string name="label_emailpassword">PerfApp</string>

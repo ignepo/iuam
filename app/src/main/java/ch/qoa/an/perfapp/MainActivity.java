@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 public class MainActivity
         extends AppCompatActivity
@@ -19,6 +20,7 @@ public class MainActivity
     public static Intent intentLogin;
     public static Intent intentAct;
     public static boolean logged = false;
+    String TAG = "Test";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +77,30 @@ public class MainActivity
 
     @Override
     public void onGlobalFragmentInteraction(Integer uri) {
+        abdotimeFragment.setSport(uri);
         callFragment(abdotimeFragment, "AbdoTime");
+
+        /*switch(uri) {
+            case 0:
+                Log.i(TAG, "onValueSelected : Abdos");
+                callFragment(abdotimeFragment, "AbdoTime");
+                abdotimeFragment.setSport(uri);
+                break;
+            case 1:
+                Log.i(TAG, "onValueSelected : Dorseaux");
+                callFragment(abdotimeFragment, "AbdoTime");
+                break;
+            case 2:
+                Log.i(TAG, "onValueSelected : Corde");
+                callFragment(abdotimeFragment, "AbdoTime");
+                break;
+            case 3:
+                Log.i(TAG, "onValueSelected : Squats");
+                callFragment(abdotimeFragment, "AbdoTime");
+                break;
+            default:
+                Log.i(TAG, "onValueSelected : Other");
+        }*/
         //detailFragment.updateElement(itemAtPosition);
         //callFragment(detailFragment, getString(R.string.toolbarTitleDetail));
         // Test commit
