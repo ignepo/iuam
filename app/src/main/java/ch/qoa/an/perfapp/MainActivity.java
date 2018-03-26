@@ -17,8 +17,6 @@ public class MainActivity
     RecapFragment recapFragment;
     AbdoTimeFragment abdotimeFragment;
     GlobalFragment globalFragment;
-    public static Intent intentLogin;
-    public static Intent intentAct;
     public static boolean logged = false;
     String TAG = "Test";
 
@@ -36,14 +34,6 @@ public class MainActivity
         fragmentTransaction.add(R.id.fragment_container, globalFragment);
         fragmentTransaction.commit();
 
-        // Préparation pour l'activité des utilisateurs connectés
-        intentAct = new Intent(this, MainActivity.class);
-
-        // Démarrage de l'activité de login
-        intentLogin = new Intent(this, EmailPasswordActivity.class);
-        if(!logged)
-            startActivity(MainActivity.intentLogin);
-
         //profileFragment = new ProfileFragment();
         //favoritesFragment = new FavoritesFragment();
         //detailFragment = new DetailFragment();
@@ -53,12 +43,15 @@ public class MainActivity
     }
 
     private void callFragment(Fragment fragmentToCall, String title) {
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        setTitle(title);
-        transaction.replace(R.id.fragment_container, fragmentToCall);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        if(logged) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            setTitle(title);
+            transaction.replace(R.id.fragment_container, fragmentToCall);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        } else {
+            startActivity(EmailPasswordActivity.intentLogin);
+        }
     }
 
     @Override

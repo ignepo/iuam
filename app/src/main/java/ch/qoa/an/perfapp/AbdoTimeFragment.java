@@ -134,7 +134,7 @@ public class AbdoTimeFragment extends Fragment {
                 // Firebase sign out
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 mAuth.signOut();
-                startActivity(MainActivity.intentLogin);
+                startActivity(EmailPasswordActivity.intentLogin);
             }
         });
 

@@ -23,6 +23,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +43,8 @@ public class EmailPasswordActivity extends BaseActivity implements
     private TextView mDetailTextView;
     private EditText mEmailField;
     private EditText mPasswordField;
+    public static Intent intentLogin;
+    public static Intent intentAct;
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -67,6 +70,12 @@ public class EmailPasswordActivity extends BaseActivity implements
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+        // Préparation pour l'activité des utilisateurs connectés
+        intentAct = new Intent(this, MainActivity.class);
+        // Démarrage de l'activité de login
+        intentLogin = new Intent(this, EmailPasswordActivity.class);
     }
 
     // [START on_start_check_user]
@@ -151,7 +160,7 @@ public class EmailPasswordActivity extends BaseActivity implements
 
         // Login effectué, démarrage des fonctions de sports
         MainActivity.logged = true;
-        startActivity(MainActivity.intentAct);
+        startActivity(EmailPasswordActivity.intentAct);
     }
 
     public void getSignOut() {
@@ -165,7 +174,8 @@ public class EmailPasswordActivity extends BaseActivity implements
 
         // Redémarrage de l'activité de login
         Intent intentLogin = new Intent(this, EmailPasswordActivity.class);
-        startActivity(MainActivity.intentLogin);
+        startActivity(this.intentLogin);
+        finish();
     }
 
     private void sendEmailVerification() {
