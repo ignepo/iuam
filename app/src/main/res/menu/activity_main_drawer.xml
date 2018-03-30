@@ -14,5 +14,9 @@
             android:id="@+id/nav_credit"
             android:icon="@mipmap/ic_credit"
             android:title="Credit" />
+        <item
+            android:id="@+id/nav_loout"
+            android:icon="@mipmap/ic_logout"
+            android:title="LogOut" />
     </group>
 </menu>

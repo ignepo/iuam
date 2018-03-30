@@ -120,8 +120,16 @@ public class MainActivity
 
     @Override
     public void onGlobalFragmentInteraction(Integer uri) {
-        abdotimeFragment.setSport(uri);
-        callFragment(abdotimeFragment, "AbdoTime");
+        if(uri == 800)
+        {
+            callFragment(recapFragment, "Recap");
+        }
+        else
+        {
+            abdotimeFragment.setSport(uri);
+            callFragment(abdotimeFragment, "AbdoTime");
+        }
+
 
         /*switch(uri) {
             case 0:
@@ -177,6 +185,13 @@ public class MainActivity
         }else if (id == R.id.nav_credit)
         {
 
+        }
+        else if (id == R.id.nav_loout)
+        {
+            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            mAuth.signOut();
+            this.finish();
+            startActivity(EmailPasswordActivity.intentLogin);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
