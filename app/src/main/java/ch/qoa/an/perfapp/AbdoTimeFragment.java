@@ -132,9 +132,11 @@ public class AbdoTimeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // Firebase sign out
-                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                mListener.onAbdoTimeFragmentInteraction(999);
+                /*FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 mAuth.signOut();
-                startActivity(EmailPasswordActivity.intentLogin);
+                MainActivity.finish();
+                startActivity(EmailPasswordActivity.intentLogin);*/
             }
         });
 

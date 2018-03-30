@@ -3,10 +3,13 @@ package ch.qoa.an.perfapp;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity
         extends AppCompatActivity
@@ -19,6 +22,7 @@ public class MainActivity
     GlobalFragment globalFragment;
     public static boolean logged = false;
     String TAG = "Test";
+    public static FragmentManager fm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +32,12 @@ public class MainActivity
         recapFragment = new RecapFragment();
         abdotimeFragment = new AbdoTimeFragment();
         globalFragment = new GlobalFragment();
+
+        /*fm = getSupportFragmentManager(); // or 'getSupportFragmentManager();'
+        int count = fm.getBackStackEntryCount();
+        for(int i = 0; i < count; ++i) {
+            fm.popBackStack();
+        }*/
 
         FragmentTransaction fragmentTransaction =
                 getSupportFragmentManager().beginTransaction();
@@ -50,7 +60,14 @@ public class MainActivity
             transaction.addToBackStack(null);
             transaction.commit();
         } else {
+            /*fm = getSupportFragmentManager(); // or 'getSupportFragmentManager();'
+            int count = fm.getBackStackEntryCount();
+            for(int i = 0; i < count; ++i) {
+                fm.popBackStack();
+            }*/
+            this.finish(); //ESSAI
             startActivity(EmailPasswordActivity.intentLogin);
+
         }
     }
 
@@ -63,7 +80,17 @@ public class MainActivity
 
     @Override
     public void onAbdoTimeFragmentInteraction(Integer uri) {
-        callFragment(recapFragment, "Recap");
+        //Si on a pressé logout
+        if(uri == 999)
+        {
+            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            mAuth.signOut();
+            this.finish();
+            startActivity(EmailPasswordActivity.intentLogin);
+        }
+        else {
+            callFragment(recapFragment, "Recap");
+        }
         //detailFragment.updateElement(itemAtPosition);
         //callFragment(detailFragment, getString(R.string.toolbarTitleDetail));
     }

@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -67,6 +68,13 @@ public class EmailPasswordActivity extends BaseActivity implements
         findViewById(R.id.sign_out_button).setOnClickListener(this);
         findViewById(R.id.verify_email_button).setOnClickListener(this);
 
+        //ESSAI
+        /*MainActivity.fm = getSupportFragmentManager(); // or 'getSupportFragmentManager();'
+        int count = MainActivity.fm.getBackStackEntryCount();
+        for(int i = 0; i < count; ++i) {
+            MainActivity.fm.popBackStack();
+        }*/
+
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
@@ -76,6 +84,12 @@ public class EmailPasswordActivity extends BaseActivity implements
         intentAct = new Intent(this, MainActivity.class);
         // Démarrage de l'activité de login
         intentLogin = new Intent(this, EmailPasswordActivity.class);
+
+        // Is the user already connected
+        if (mAuth.getCurrentUser() != null) {
+            startActivity(new Intent(EmailPasswordActivity.this, MainActivity.class));
+            finish();
+        }
     }
 
     // [START on_start_check_user]
@@ -160,6 +174,7 @@ public class EmailPasswordActivity extends BaseActivity implements
 
         // Login effectué, démarrage des fonctions de sports
         MainActivity.logged = true;
+        this.finish(); //ESSAI
         startActivity(EmailPasswordActivity.intentAct);
     }
 
@@ -168,6 +183,13 @@ public class EmailPasswordActivity extends BaseActivity implements
     }
 
     private void signOut() {
+
+        /*MainActivity.fm = getSupportFragmentManager(); // or 'getSupportFragmentManager();'
+        int count = MainActivity.fm.getBackStackEntryCount();
+        for(int i = 0; i < count; ++i) {
+            MainActivity.fm.popBackStack();
+        }*/
+
         MainActivity.logged = false;
         mAuth.signOut();
         updateUI(null);
