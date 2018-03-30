@@ -24,11 +24,13 @@ public class MainActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         RecapFragment.OnFragmentInteractionListener,
         AbdoTimeFragment.OnFragmentInteractionListener,
-        GlobalFragment.OnFragmentInteractionListener{
+        GlobalFragment.OnFragmentInteractionListener,
+        ProfileFragment.OnFragmentInteractionListener{
 
     RecapFragment recapFragment;
     AbdoTimeFragment abdotimeFragment;
     GlobalFragment globalFragment;
+    ProfileFragment profileFragment;
     public static boolean logged = false;
     String TAG = "Test";
    private NavigationView navigationView;
@@ -41,6 +43,7 @@ public class MainActivity
         recapFragment = new RecapFragment();
         abdotimeFragment = new AbdoTimeFragment();
         globalFragment = new GlobalFragment();
+        profileFragment = new ProfileFragment();
 
         /*fm = getSupportFragmentManager(); // or 'getSupportFragmentManager();'
         int count = fm.getBackStackEntryCount();
@@ -82,6 +85,13 @@ public class MainActivity
             startActivity(EmailPasswordActivity.intentLogin);
 
         }*/
+    }
+
+    @Override
+    public void onProfileFragmentInteraction(Integer uri) {
+        callFragment(profileFragment, "Profile");
+        //detailFragment.updateElement(itemAtPosition);
+        //callFragment(detailFragment, getString(R.string.toolbarTitleDetail));
     }
 
     @Override
@@ -159,8 +169,10 @@ public class MainActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
+            callFragment(globalFragment, "Global");
             //onDrawerFragmentInteraction(mapFragment, getString(R.string.toolbarTitleMap));
         } else if (id == R.id.nav_profile) {
+            onProfileFragmentInteraction(0);
             //onDrawerFragmentInteraction(listFragment, getString(R.string.toolbarTitleList));
         }else if (id == R.id.nav_credit)
         {
