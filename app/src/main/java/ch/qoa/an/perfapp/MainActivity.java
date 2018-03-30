@@ -2,18 +2,27 @@ package ch.qoa.an.perfapp;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
+import android.widget.Toast;
+import android.support.design.widget.NavigationView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity
         extends AppCompatActivity
-        implements RecapFragment.OnFragmentInteractionListener,
+        implements NavigationView.OnNavigationItemSelectedListener,
+        RecapFragment.OnFragmentInteractionListener,
         AbdoTimeFragment.OnFragmentInteractionListener,
         GlobalFragment.OnFragmentInteractionListener{
 
@@ -22,7 +31,7 @@ public class MainActivity
     GlobalFragment globalFragment;
     public static boolean logged = false;
     String TAG = "Test";
-    public static FragmentManager fm;
+   private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,31 +53,35 @@ public class MainActivity
         fragmentTransaction.add(R.id.fragment_container, globalFragment);
         fragmentTransaction.commit();
 
-        //profileFragment = new ProfileFragment();
-        //favoritesFragment = new FavoritesFragment();
-        //detailFragment = new DetailFragment();
+        //-----------------------------------------------------------------------------------
+        // Toolbar / drawer
+        //-----------------------------------------------------------------------------------
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        //mapFragment.setStationList(stationList);
-        //ListFragment.setStationList(stationList);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
     private void callFragment(Fragment fragmentToCall, String title) {
-        if(logged) {
+        //if(logged) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             setTitle(title);
             transaction.replace(R.id.fragment_container, fragmentToCall);
             transaction.addToBackStack(null);
             transaction.commit();
-        } else {
-            /*fm = getSupportFragmentManager(); // or 'getSupportFragmentManager();'
-            int count = fm.getBackStackEntryCount();
-            for(int i = 0; i < count; ++i) {
-                fm.popBackStack();
-            }*/
+        /*} else {
+
             this.finish(); //ESSAI
             startActivity(EmailPasswordActivity.intentLogin);
 
-        }
+        }*/
     }
 
     @Override
@@ -124,6 +137,40 @@ public class MainActivity
         //detailFragment.updateElement(itemAtPosition);
         //callFragment(detailFragment, getString(R.string.toolbarTitleDetail));
         // Test commit
+    }
+
+    //----------------------------------------------------------------------
+    // Drawer methods
+    //----------------------------------------------------------------------
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_home) {
+            //onDrawerFragmentInteraction(mapFragment, getString(R.string.toolbarTitleMap));
+        } else if (id == R.id.nav_profile) {
+            //onDrawerFragmentInteraction(listFragment, getString(R.string.toolbarTitleList));
+        }else if (id == R.id.nav_credit)
+        {
+
+        }
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+
     }
 
 }
