@@ -48,7 +48,7 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    String TAG = "TestPerfApp";
+    String TAG = "TestApp";
 
     //70r0-0kLNDWmRIOukJSNBrTPRlP
     /*public static final int[] COLORS_PERFAPP = {
@@ -79,6 +79,7 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
     private Button buttonTime;
     private TextView text;
     PieChart pieChart;
+    boolean Time_nRep=true;
 
     private OnFragmentInteractionListener mListener;
 
@@ -118,8 +119,10 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         myView=inflater.inflate(R.layout.fragment_global, container, false);
+        Log.i(TAG, "onCreanteView: ********FRAGMENT*********");
 
         //processGETRequest();
+
         //-----------------------------------------------------------------------------------
         // Ajout listener
         //-----------------------------------------------------------------------------------
@@ -128,11 +131,12 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
             @Override
             public void onClick(View view) {
                 if(mListener != null){
-                    buttonRep.setBackgroundTintList(getResources().getColorStateList((R.color.colorAccent)));
+                    Time_nRep=false;
+                    //buttonRep.setBackgroundTintList(getResources().getColorStateList((R.color.colorAccent)));
 
-                    buttonTime.setBackgroundTintList(getResources().getColorStateList((R.color.grey_300)));
+                    //buttonTime.setBackgroundTintList(getResources().getColorStateList((R.color.grey_300)));
 
-                    //mListener.onGlobalFragmentInteraction(1);
+                    mListener.onGlobalFragmentInteraction(101);
                 }
             }
         });
@@ -142,13 +146,28 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
             @Override
             public void onClick(View view) {
                 if(mListener != null){
-                    buttonTime.setBackgroundTintList(getResources().getColorStateList(R.color.colorAccent));
+                    Time_nRep=true;
+                    //buttonTime.setBackgroundTintList(getResources().getColorStateList(R.color.colorAccent));
 
-                    buttonRep.setBackgroundTintList(getResources().getColorStateList(R.color.grey_300));
-                   // mListener.onGlobalFragmentInteraction(2);
+                    //buttonRep.setBackgroundTintList(getResources().getColorStateList(R.color.grey_300));
+                    mListener.onGlobalFragmentInteraction(100);
                 }
             }
         });
+
+        if(Time_nRep)
+        {
+            buttonTime.setBackgroundTintList(getResources().getColorStateList(R.color.colorAccent));
+
+            buttonRep.setBackgroundTintList(getResources().getColorStateList(R.color.grey_300));
+        }
+        else
+        {
+            buttonRep.setBackgroundTintList(getResources().getColorStateList((R.color.colorAccent)));
+
+            buttonTime.setBackgroundTintList(getResources().getColorStateList((R.color.grey_300)));
+
+        }
 
         FloatingActionButton seeStationOnMap = myView.findViewById(R.id.mapButton);
         seeStationOnMap.setOnClickListener(new View.OnClickListener() {
@@ -165,7 +184,7 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
         //-----------------------------------------------------------------------------------
         pieChart = myView.findViewById(R.id.piechart);
         pieChart.setTouchEnabled(true);
-        pieChart.setUsePercentValues(true); //Converti en pourcentage
+        pieChart.setUsePercentValues(false); //Converti en pourcentage
         pieChart.getDescription().setEnabled(false); //Text dans le chart
         //pieChart.setDrawEntryLabels(false);
         pieChart.setDrawEntryLabels(true);//Text dans le chart
@@ -278,6 +297,14 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
         super.onDetach();
         mListener = null;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Set title
+        getActivity().setTitle("PerfApp");
+    }
+
 
     /**
      * This interface must be implemented by activities that contain this

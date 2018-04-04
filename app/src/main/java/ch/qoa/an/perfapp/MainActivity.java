@@ -37,7 +37,7 @@ public class MainActivity
     GlobalFragment globalFragment;
     ProfileFragment profileFragment;
     public static boolean logged = false;
-    String TAG = "Test";
+    String TAG = "TestApp";
 
     public static String AbdosNum;
     public static String DorseauxNum;
@@ -59,10 +59,10 @@ public class MainActivity
 
         processGETRequest("/sports/1");
 
-        /*FragmentTransaction fragmentTransaction =
+        FragmentTransaction fragmentTransaction =
                 getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.fragment_container, globalFragment);
-        fragmentTransaction.commit();*/
+        /*fragmentTransaction.commit();*/
 
         //-----------------------------------------------------------------------------------
         // Toolbar / drawer
@@ -82,10 +82,12 @@ public class MainActivity
 
     private void callFragment(Fragment fragmentToCall, String title) {
         //if(logged) {
+
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            setTitle(title);
+            //setTitle(title);
             transaction.replace(R.id.fragment_container, fragmentToCall);
             transaction.addToBackStack(null);
+
             transaction.commit();
         /*} else {
 
@@ -104,7 +106,7 @@ public class MainActivity
 
     @Override
     public void onRecapFragmentInteraction(Integer uri) {
-        callFragment(globalFragment, "Global");
+        callFragment(globalFragment, "PerfApp");
         //detailFragment.updateElement(itemAtPosition);
         //callFragment(detailFragment, getString(R.string.toolbarTitleDetail));
     }
@@ -132,37 +134,19 @@ public class MainActivity
         {
             callFragment(recapFragment, "Recap");
         }
+        else if (uri == 100)
+        {
+            processGETRequest("/sports/1");
+        }
+        else if(uri == 101)
+        {
+            processGETRequest("/sports/2");
+        }
         else
         {
             abdotimeFragment.setSport(uri);
             callFragment(abdotimeFragment, "AbdoTime");
         }
-
-
-        /*switch(uri) {
-            case 0:
-                Log.i(TAG, "onValueSelected : Abdos");
-                callFragment(abdotimeFragment, "AbdoTime");
-                abdotimeFragment.setSport(uri);
-                break;
-            case 1:
-                Log.i(TAG, "onValueSelected : Dorseaux");
-                callFragment(abdotimeFragment, "AbdoTime");
-                break;
-            case 2:
-                Log.i(TAG, "onValueSelected : Corde");
-                callFragment(abdotimeFragment, "AbdoTime");
-                break;
-            case 3:
-                Log.i(TAG, "onValueSelected : Squats");
-                callFragment(abdotimeFragment, "AbdoTime");
-                break;
-            default:
-                Log.i(TAG, "onValueSelected : Other");
-        }*/
-        //detailFragment.updateElement(itemAtPosition);
-        //callFragment(detailFragment, getString(R.string.toolbarTitleDetail));
-        // Test commit
     }
 
     //----------------------------------------------------------------------
@@ -185,7 +169,7 @@ public class MainActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            callFragment(globalFragment, "Global");
+            callFragment(globalFragment, "PerfApp");
             //onDrawerFragmentInteraction(mapFragment, getString(R.string.toolbarTitleMap));
         } else if (id == R.id.nav_profile) {
             onProfileFragmentInteraction(0);
@@ -232,20 +216,39 @@ public class MainActivity
                                     SquatsNum=StationK.getString("Squats");
                                     CordesNum=StationK.getString("Corde");
 
-                                    Log.i(TAG, "onSuccessResponse:********* Abdos : " + AbdosNum);
-                                    Log.i(TAG, "onSuccessResponse:********* Dorseaux : " + DorseauxNum);
-                                    Log.i(TAG, "onSuccessResponse:********* Squats : " + SquatsNum);
-                                    Log.i(TAG, "onSuccessResponse:********* Cordes : " + CordesNum);
+                                    Log.i(TAG, "onSuccessResponse: Abdos : " + AbdosNum);
+                                    Log.i(TAG, "onSuccessResponse: Dorseaux : " + DorseauxNum);
+                                    Log.i(TAG, "onSuccessResponse: Squats : " + SquatsNum);
+                                    Log.i(TAG, "onSuccessResponse: Cordes : " + CordesNum);
 
-                                    //initList(StationK,k);
-                                    FragmentTransaction fragmentTransaction =
-                                            getSupportFragmentManager().beginTransaction();
-                                    fragmentTransaction.add(R.id.fragment_container, globalFragment);
-                                    fragmentTransaction.commit();
+                                    FragmentTransaction fragTransaction =  getSupportFragmentManager().beginTransaction();
+                                    //fragTransaction.add(R.id.fragment_container, globalFragment);
+                                    fragTransaction.detach(globalFragment);
+                                    fragTransaction.attach(globalFragment);
+
+                                    fragTransaction.commit();
+
                                 }
                                 else
                                 {
-                                    Log.i(TAG, "onSuccessResponse: GROSSE PROBLEM: ");
+                                    //Log.i(TAG, "onSuccessResponse: GROSSE PROBLEM: ");
+
+                                    JSONObject StationK = sessions.getJSONObject(k);
+
+                                    AbdosNum=StationK.getString("Abdos");
+                                    DorseauxNum=StationK.getString("Dorsaux");
+                                    SquatsNum=StationK.getString("Squats");
+                                    CordesNum=StationK.getString("Corde");
+
+                                    Log.i(TAG, "onSuccessResponse: Abdos : " + AbdosNum);
+                                    Log.i(TAG, "onSuccessResponse: Dorseaux : " + DorseauxNum);
+                                    Log.i(TAG, "onSuccessResponse: Squats : " + SquatsNum);
+                                    Log.i(TAG, "onSuccessResponse: Cordes : " + CordesNum);
+
+                                    FragmentTransaction fragTransaction =  getSupportFragmentManager().beginTransaction();
+                                    fragTransaction.detach(globalFragment);
+                                    fragTransaction.attach(globalFragment);
+                                    fragTransaction.commit();
                                 }
 
 

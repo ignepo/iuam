@@ -179,6 +179,13 @@ public class AbdoTimeFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Set title
+        getActivity().setTitle("Sport History");
+    }
+
     public void setSport(Integer sport) {
         setSport = sport;
     }
