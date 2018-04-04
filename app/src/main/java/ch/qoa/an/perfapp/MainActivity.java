@@ -17,7 +17,12 @@ import android.view.MenuItem;
 import android.widget.Toast;
 import android.support.design.widget.NavigationView;
 
+import com.android.volley.Request;
 import com.google.firebase.auth.FirebaseAuth;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity
         extends AppCompatActivity
@@ -33,7 +38,14 @@ public class MainActivity
     ProfileFragment profileFragment;
     public static boolean logged = false;
     String TAG = "Test";
-   private NavigationView navigationView;
+
+    public static String AbdosNum;
+    public static String DorseauxNum;
+    public static String SquatsNum;
+    public static String CordesNum;
+
+
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,16 +57,12 @@ public class MainActivity
         globalFragment = new GlobalFragment();
         profileFragment = new ProfileFragment();
 
-        /*fm = getSupportFragmentManager(); // or 'getSupportFragmentManager();'
-        int count = fm.getBackStackEntryCount();
-        for(int i = 0; i < count; ++i) {
-            fm.popBackStack();
-        }*/
+        processGETRequest("/sports/1");
 
-        FragmentTransaction fragmentTransaction =
+        /*FragmentTransaction fragmentTransaction =
                 getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.fragment_container, globalFragment);
-        fragmentTransaction.commit();
+        fragmentTransaction.commit();*/
 
         //-----------------------------------------------------------------------------------
         // Toolbar / drawer
@@ -199,5 +207,55 @@ public class MainActivity
         return true;
 
     }
+
+    //---------------------------------------------------------------------------------
+    // Récupération et parsing du JSON des station preovenant du serveur
+    //---------------------------------------------------------------------------------
+    private void processGETRequest(String url) {
+        final String url_set = url;
+
+        Utils.processRequest(this, Request.Method.GET, url, null,
+                new Utils.VolleyCallback() {
+
+                    @Override
+                    public void onSuccessResponse(JSONObject result) {
+                        try {
+                            JSONArray sessions = result.getJSONArray("sessions");
+                            for(int k=0; k<sessions.length(); k++)
+                            {
+                                if(url_set == "/sports/1")
+                                {
+                                    JSONObject StationK = sessions.getJSONObject(k);
+
+                                    AbdosNum=StationK.getString("Abdos");
+                                    DorseauxNum=StationK.getString("Dorsaux");
+                                    SquatsNum=StationK.getString("Squats");
+                                    CordesNum=StationK.getString("Corde");
+
+                                    Log.i(TAG, "onSuccessResponse:********* Abdos : " + AbdosNum);
+                                    Log.i(TAG, "onSuccessResponse:********* Dorseaux : " + DorseauxNum);
+                                    Log.i(TAG, "onSuccessResponse:********* Squats : " + SquatsNum);
+                                    Log.i(TAG, "onSuccessResponse:********* Cordes : " + CordesNum);
+
+                                    //initList(StationK,k);
+                                    FragmentTransaction fragmentTransaction =
+                                            getSupportFragmentManager().beginTransaction();
+                                    fragmentTransaction.add(R.id.fragment_container, globalFragment);
+                                    fragmentTransaction.commit();
+                                }
+                                else
+                                {
+                                    Log.i(TAG, "onSuccessResponse: GROSSE PROBLEM: ");
+                                }
+
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
 
 }

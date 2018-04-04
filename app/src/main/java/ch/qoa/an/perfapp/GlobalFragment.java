@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.volley.Request;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
@@ -22,6 +23,10 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.jjoe64.graphview.GraphView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -43,7 +48,7 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    String TAG = "Test";
+    String TAG = "TestPerfApp";
 
     //70r0-0kLNDWmRIOukJSNBrTPRlP
     /*public static final int[] COLORS_PERFAPP = {
@@ -113,6 +118,7 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
         // Inflate the layout for this fragment
         myView=inflater.inflate(R.layout.fragment_global, container, false);
 
+        //processGETRequest();
         //-----------------------------------------------------------------------------------
         // Ajout listener
         //-----------------------------------------------------------------------------------
@@ -135,12 +141,13 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
                 }
             }
         });
+
         //-----------------------------------------------------------------------------------
         // Graphique Piechart
         //-----------------------------------------------------------------------------------
-        pieChart=myView.findViewById(R.id.piechart);
+        pieChart = myView.findViewById(R.id.piechart);
         pieChart.setTouchEnabled(true);
-        pieChart.setUsePercentValues(false); //Converti en pourcentage
+        pieChart.setUsePercentValues(true); //Converti en pourcentage
         pieChart.getDescription().setEnabled(false); //Text dans le chart
         //pieChart.setDrawEntryLabels(false);
         pieChart.setDrawEntryLabels(true);//Text dans le chart
@@ -159,14 +166,21 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
         //pieChart.setTransparentCircleRadius(0f);
 
         ArrayList<PieEntry> yValues = new ArrayList<>();
-        yValues.add(new PieEntry(43f,"Abdo")); //x=0 dans higlight
+        /*yValues.add(new PieEntry(43f,"Abdo")); //x=0 dans higlight
         yValues.add(new PieEntry(23f, "Dorseaux"));//x=1 dans higlight
         yValues.add(new PieEntry(67f, "Corde"));//x=2 dans higlight
-        yValues.add(new PieEntry(35f, "Squat"));//x=3 dans higlight
+        yValues.add(new PieEntry(35f, "Squat"));//x=3 dans higlight*/
+
+        //while(AbdosNum == "null" );
+        yValues.add(new PieEntry(Float.parseFloat(MainActivity.AbdosNum), "Abdo")); //x=0 dans higlight
+        yValues.add(new PieEntry(Float.parseFloat(MainActivity.DorseauxNum), "Dorseaux"));//x=1 dans higlight
+        yValues.add(new PieEntry(Float.parseFloat(MainActivity.CordesNum), "Corde"));//x=2 dans higlight
+        yValues.add(new PieEntry(Float.parseFloat(MainActivity.SquatsNum), "Squat"));//x=3 dans higlight
+
         //yValues.add(new PieEntry(40f, "partye"));
         //yValues.add(new PieEntry(23f, "partyf"));
 
-        PieDataSet dataSet = new PieDataSet(yValues,"");
+        PieDataSet dataSet = new PieDataSet(yValues, "");
         dataSet.setSliceSpace(5f);
         dataSet.setSelectionShift(5f);
         //dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
@@ -222,21 +236,6 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
     public void onNothingSelected() {
 
     }
-/*
-    public interface OnChartValueSelectedListener {
-        //
-         // Called when a value has been selected inside the chart.
-         //
-         //@param e The selected Entry.
-         // @param h The corresponding highlight object that contains information
-         //about the highlighted position
-         //
-        public void onValueSelected(Entry e, Highlight h);
-        //
-         // Called when nothing has been selected or an "un-select" has been made.
-         //
-        public void onNothingSelected();
-    }*/
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Integer uri) {
