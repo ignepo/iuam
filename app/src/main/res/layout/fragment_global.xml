@@ -12,13 +12,10 @@
         android:orientation="vertical">
 
         <!-- TODO: Update blank fragment layout -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical|center_horizontal|center"
-            android:text="@string/hello_global_fragment"
-            android:textColor="@color/colorAccent"
-            android:textSize="30dip" />
+        <View
+            android:layout_width="50dip"
+            android:layout_height="20dip"
+            android:layout_gravity="center_vertical" />
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/piechart"
@@ -30,6 +27,39 @@
             android:textColor="@color/colorPrimary"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="15dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <!-- TODO: Update blank fragment layout -->
+            <Button
+                android:id="@+id/buttonTime"
+                android:layout_width="100dip"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:backgroundTint="@color/colorAccent"
+                android:text="Time" />
+
+            <View
+                android:layout_width="50dip"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical" />
+
+            <Button
+                android:id="@+id/buttonRep"
+                android:layout_width="100dip"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/grey_300"
+                android:gravity="center"
+                android:text="Rep" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
@@ -38,7 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="152dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="212dp"
+        android:layout_marginTop="192dp"
         android:src="@mipmap/ic_sport"
         android:tint="@color/colorAccent"
         app:backgroundTint="@color/colorPrimary" />

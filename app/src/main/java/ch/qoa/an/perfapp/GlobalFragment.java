@@ -75,7 +75,8 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
     private String mParam1;
     private String mParam2;
     View myView;
-    private Button button;
+    private Button buttonRep;
+    private Button buttonTime;
     private TextView text;
     PieChart pieChart;
 
@@ -122,15 +123,32 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
         //-----------------------------------------------------------------------------------
         // Ajout listener
         //-----------------------------------------------------------------------------------
-        /*button = myView.findViewById(R.id.button3);
-        button.setOnClickListener(new View.OnClickListener() {
+        buttonRep = myView.findViewById(R.id.buttonRep);
+        buttonRep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(mListener != null){
-                    mListener.onGlobalFragmentInteraction(1);
+                    buttonRep.setBackgroundTintList(getResources().getColorStateList((R.color.colorAccent)));
+
+                    buttonTime.setBackgroundTintList(getResources().getColorStateList((R.color.grey_300)));
+
+                    //mListener.onGlobalFragmentInteraction(1);
                 }
             }
-        });*/
+        });
+
+        buttonTime = myView.findViewById(R.id.buttonTime);
+        buttonTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mListener != null){
+                    buttonTime.setBackgroundTintList(getResources().getColorStateList(R.color.colorAccent));
+
+                    buttonRep.setBackgroundTintList(getResources().getColorStateList(R.color.grey_300));
+                   // mListener.onGlobalFragmentInteraction(2);
+                }
+            }
+        });
 
         FloatingActionButton seeStationOnMap = myView.findViewById(R.id.mapButton);
         seeStationOnMap.setOnClickListener(new View.OnClickListener() {
