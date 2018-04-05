@@ -10,7 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
         </activity>
         <activity android:name=".EmailPasswordActivity"
             android:parentActivityName=".EmailPasswordActivity">
