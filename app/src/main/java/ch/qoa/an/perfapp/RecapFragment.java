@@ -12,9 +12,13 @@ import android.widget.Button;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.ValueDependentColor;
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+
+import java.util.Calendar;
+import java.util.Date;
 
 
 /**
@@ -37,6 +41,12 @@ public class RecapFragment extends Fragment {
     View myView;
     GraphView bargraph;
     private Button goAbdoTime;
+
+    public static final int COLOR_ABDO = Color.rgb(0, 0, 0);
+    public static final int COLOR_DORSEAU = Color.rgb(148, 16, 231);
+    public static final int COLOR_CORDE = Color.rgb(61, 33, 233);
+    public static final int COLOR_SQUAT = Color.rgb(7, 200, 227);
+
 
 
     private OnFragmentInteractionListener mListener;
@@ -93,30 +103,113 @@ public class RecapFragment extends Fragment {
             }
         });
 
+
+
+
+        //-----------------------------------------------------------------------------------
+        // generate Dates
+        /*Calendar calendar = Calendar.getInstance();
+        Date d1 = calendar.getTime();
+        calendar.add(Calendar.DATE, 1);
+        Date d2 = calendar.getTime();
+        calendar.add(Calendar.DATE, 1);
+        Date d3 = calendar.getTime();
+        calendar.add(Calendar.DATE, 3);
+        Date d4 = calendar.getTime();
+        calendar.add(Calendar.DATE, 2);
+        Date d5 = calendar.getTime();
+        calendar.add(Calendar.DATE, 1);
+        Date d6 = calendar.getTime();
+        calendar.add(Calendar.DATE, 4);
+        Date d7 = calendar.getTime();
+        calendar.add(Calendar.DATE, 7);
+        Date d8 = calendar.getTime();
+        calendar.add(Calendar.DATE, 1);
+        Date d9 = calendar.getTime();
+        calendar.add(Calendar.DATE, 1);
+        Date d10 = calendar.getTime();
+        calendar.add(Calendar.DATE, 1);
+        Date d11 = calendar.getTime();
+        calendar.add(Calendar.DATE, 1);
+        Date d12 = calendar.getTime();
+        calendar.add(Calendar.DATE, 1);*/
+        Date d1 = new Date(2018, 6, 2);
+        Date d2 = new Date(2018, 6, 10);
+        Date d3 = new Date(2018, 6, 11);
+        Date d4 = new Date(2018, 6, 12);
+        Date d5 = new Date(2018, 6, 15);
+        Date d6 = new Date(2018, 6, 16);
+        Date d7 = new Date(2018, 6, 20);
+        Date d8 = new Date(2018, 6, 30);
+        Date d9 = new Date(2018, 7, 2);
+        Date d10 = new Date(2018, 7, 3);
+        Date d11 = new Date(2018, 7, 12);
+        Date d12 = new Date(2018, 7, 13);
+        Date d13 = new Date(2018, 7, 14);
+        //Date d14 = new Date(2018, 6, 2);//set(year + 1900, month, date);//calendar.getTime();
+
+
         GraphView graph = (GraphView) myView.findViewById(R.id.bargraph);
+
+        // you can directly pass Date objects to DataPoint-Constructor
+        // this will convert the Date to double via Date#getTime()
         BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[] {
+                new DataPoint(d1, 43),
+                new DataPoint(d2, 10),
+                new DataPoint(d3, 23),
+                new DataPoint(d4, 43),
+                new DataPoint(d5, 10),
+                new DataPoint(d6, 23),
+                new DataPoint(d7, 43),
+                new DataPoint(d8, 10),
+                new DataPoint(d9, 23),
+                new DataPoint(d10, 43),
+                new DataPoint(d11, 10),
+                new DataPoint(d12, 23),
+                new DataPoint(d13, 68)
+        });
+        graph.addSeries(series);
+
+        // set date label formatter
+        graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
+        graph.getGridLabelRenderer().setNumHorizontalLabels(3); // only 4 because of the space
+
+        // set manual x bounds to have nice steps
+        graph.getViewport().setMinX(d1.getTime());
+        graph.getViewport().setMaxX(d13.getTime());
+        graph.getViewport().setXAxisBoundsManual(true);
+
+        // as we use dates as labels, the human rounding to nice readable numbers
+        // is not necessary
+        graph.getGridLabelRenderer().setHumanRounding(false);
+        //-----------------------------------------------------------------------------------
+
+
+        //GraphView graph = (GraphView) myView.findViewById(R.id.bargraph);
+        /*BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[] {
                 new DataPoint(0, -1),
                 new DataPoint(1, 5),
                 new DataPoint(2, 3),
                 new DataPoint(3, 2),
                 new DataPoint(4, 6)
         });
-        graph.addSeries(series);
+        graph.addSeries(series);*/
 
+        series.setColor(COLOR_ABDO);
         // styling
-        series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
+        /*series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
             @Override
             public int get(DataPoint data) {
                 return Color.rgb((int) data.getX()*255/4, (int) Math.abs(data.getY()*255/6), 100);
             }
-        });
+        });*/
 
-        series.setSpacing(50);
+        series.setSpacing(5);
 
         // draw values on top
-        series.setDrawValuesOnTop(true);
+        series.setDrawValuesOnTop(false);
         series.setValuesOnTopColor(Color.RED);
-        //series.setValuesOnTopSize(50);
+        series.setValuesOnTopSize(50);
 
         return myView;
     }

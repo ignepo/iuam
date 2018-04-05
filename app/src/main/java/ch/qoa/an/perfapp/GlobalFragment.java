@@ -65,10 +65,10 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
     };*/
 
     public static final int[] COLORS_PERFAPP = {
-            Color.rgb(241, 3, 138), //#f1038a
-            Color.rgb(148, 16, 231), //#9410e7
-            Color.rgb(61, 33, 233),//#3d21e9
-            Color.rgb(7, 200, 227)//#07C8E3
+            Color.rgb(241, 3, 138), //#f1038a abdo
+            Color.rgb(148, 16, 231), //#9410e7 dorseaux
+            Color.rgb(61, 33, 233),//#3d21e9 cordes
+            Color.rgb(7, 200, 227)//#07C8E3 squats
     };
 
     // TODO: Rename and change types of parameters

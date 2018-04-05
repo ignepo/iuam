@@ -9,33 +9,48 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
         android:orientation="vertical">
+        <!--
+        <View
+            android:layout_width="50dip"
+            android:layout_height="25dip"
+            android:layout_gravity="center_vertical" />
 
-        <!-- TODO: Update blank fragment layout -->
+
         <TextView
             android:id="@+id/textSport"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:capitalize="words"
             android:gravity="center_vertical|center_horizontal|center"
             android:text="@string/hello_abdotime_fragment"
-            android:textColor="@color/colorAccent"
-            android:textSize="30dip" />
+            android:textColor="@color/colorDark"
+            android:textSize="30dip"
+            android:textStyle="bold" />
+            -->
 
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Button" />
+        <View
+            android:layout_width="50dip"
+            android:layout_height="10dip"
+            android:layout_gravity="center_vertical" />
+
+        <ImageView
+            android:layout_width="350dip"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:id="@+id/imageSport"/>
+
+        <View
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:layout_gravity="center_vertical" />
 
         <com.jjoe64.graphview.GraphView
-            android:layout_width="300dip"
-            android:layout_height="200dip"
-            android:id="@+id/graph" />
+            android:id="@+id/bargraph"
+            android:layout_width="match_parent"
+            android:layout_height="300dip"
+            android:layout_marginLeft="20dip"
+            android:layout_marginRight="20dip" />
 
-        <Button
-            android:id="@+id/buttonLogout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Logout" />
 
     </LinearLayout>
 </FrameLayout>

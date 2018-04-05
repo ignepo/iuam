@@ -144,7 +144,11 @@ public class MainActivity
         }
         else
         {
+
             abdotimeFragment.setSport(uri);
+            FragmentTransaction fragTransaction =  getSupportFragmentManager().beginTransaction();
+            fragTransaction.detach(abdotimeFragment);
+            fragTransaction.attach(abdotimeFragment);
             callFragment(abdotimeFragment, "AbdoTime");
         }
     }
