@@ -45,6 +45,7 @@ public class MainActivity
     public static ArrayList<SportItem> DorsauxSessionList;
     public static ArrayList<SportItem> CordeSessionList;
     public static ArrayList<SportItem> SquatsSessionList;
+    public static ArrayList<SessionItem> AllSessionList;
 
     public static String AbdosNum;
     public static String DorseauxNum;
@@ -70,8 +71,9 @@ public class MainActivity
         DorsauxSessionList = new ArrayList<>();
         CordeSessionList = new ArrayList<>();
         SquatsSessionList = new ArrayList<>();
+        AllSessionList = new ArrayList<>();
 
-        FragmentTransaction fragmentTransaction =
+                FragmentTransaction fragmentTransaction =
                 getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.fragment_container, globalFragment);
         /*fragmentTransaction.commit();*/
@@ -144,6 +146,7 @@ public class MainActivity
     public void onGlobalFragmentInteraction(Integer uri) {
         if(uri == 800)
         {
+            //processGETRequest_Hist("/days/1/");
             callFragment(recapFragment, "Recap");
         }
         else if (uri == 100)
@@ -230,7 +233,7 @@ public class MainActivity
     //---------------------------------------------------------------------------------
     private void processGETRequest_TimeHist() {
 
-        Utils.processRequest(this, Request.Method.GET, "/sports/1", null,
+        Utils.processRequest(this, Request.Method.GET, "/sports/2", null,
                 new Utils.VolleyCallback() {
 
                     @Override
@@ -242,10 +245,10 @@ public class MainActivity
                             {
                                 JSONObject StationK = sessions.getJSONObject(k);
 
-                                AbdosNum=StationK.getString("Abdos");
-                                DorseauxNum=StationK.getString("Dorsaux");
-                                SquatsNum=StationK.getString("Squats");
-                                CordesNum=StationK.getString("Corde");
+                                AbdosNum=StationK.getString("Abdos_time");
+                                DorseauxNum=StationK.getString("Dorsaux_time");
+                                SquatsNum=StationK.getString("Squats_time");
+                                CordesNum=StationK.getString("Corde_time");
 
                                 Log.i(TAG, "onSuccessResponse: Abdos : " + AbdosNum);
                                 Log.i(TAG, "onSuccessResponse: Dorseaux : " + DorseauxNum);
@@ -273,14 +276,12 @@ public class MainActivity
     //---------------------------------------------------------------------------------
     private void processGETRequest_RepHist() {
 
-        Utils.processRequest(this, Request.Method.GET, "/sports/2", null,
+        Utils.processRequest(this, Request.Method.GET, "/sports/1", null,
                 new Utils.VolleyCallback() {
 
                     @Override
                     public void onSuccessResponse(JSONObject result) {
                         try {
-
-
                             JSONArray sessions = result.getJSONArray("sessions");
                             for(int k=0; k<sessions.length(); k++)
                             {
@@ -377,6 +378,42 @@ public class MainActivity
                             fragTransaction.detach(abdotimeFragment);
                             fragTransaction.attach(abdotimeFragment);
                             callFragment(abdotimeFragment, "AbdoTime");
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+    //---------------------------------------------------------------------------------
+    // Récupération et parsing du JSON des station preovenant du serveur
+    //---------------------------------------------------------------------------------
+    private void processGETRequest_Hist(String url) {
+
+        final String Url = url;
+
+        Utils.processRequest(this, Request.Method.GET, Url, null,
+                new Utils.VolleyCallback() {
+
+                    @Override
+                    public void onSuccessResponse(JSONObject result) {
+                        try {
+                            AllSessionList.clear();
+                            JSONArray sessions = result.getJSONArray("sessions");
+
+                            for(int k=0; k<sessions.length(); k++)
+                            {
+                                JSONObject SessionK = sessions.getJSONObject(k);
+
+                                initListAll(SessionK);
+                            }
+
+                            callFragment(recapFragment, "Recap");
+                            /*FragmentTransaction fragTransaction =  getSupportFragmentManager().beginTransaction();
+                            fragTransaction.detach(abdotimeFragment);
+                            fragTransaction.attach(abdotimeFragment);
+                            callFragment(abdotimeFragment, "AbdoTime");*/
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -496,6 +533,43 @@ public class MainActivity
             DorsauxSession.setMonth(Month);
             DorsauxSession.setDay(Day);
             DorsauxSessionList.add(DorsauxSession);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    //---------------------------------------------------------------------------------
+    // Initialisation de la liste
+    //---------------------------------------------------------------------------------
+    private void initListAll(JSONObject sessionK) {
+
+        try {
+
+            Integer  AbdosValue = Integer.parseInt(sessionK.getString("Abdo"));
+            Integer  DoresauxValue = Integer.parseInt(sessionK.getString("Dorsaux"));
+            Integer  CordeValue = Integer.parseInt(sessionK.getString("Corde"));
+            Integer  SquatsValue = Integer.parseInt(sessionK.getString("Squats"));
+
+            String  Date = sessionK.getString("date");
+            String[] DateS = Date.split("-");
+            Integer Year = Integer.parseInt(DateS[0]);
+            Integer Month = Integer.parseInt(DateS[1]);
+            Integer Day = Integer.parseInt(DateS[2]);
+
+            SessionItem AllSession = new SessionItem();
+
+            AllSession.setRepAbdos(AbdosValue);
+            AllSession.setRepDorsaux(DoresauxValue);
+            AllSession.setRepCorde(CordeValue);
+            AllSession.setRepSquats(SquatsValue);
+
+            AllSession.setYear(Year);
+            AllSession.setMonth(Month);
+            AllSession.setDay(Day);
+            AllSessionList.add(AllSession);
 
         } catch (JSONException e) {
             e.printStackTrace();

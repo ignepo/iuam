@@ -31,6 +31,8 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import java.util.ArrayList;
 import java.util.Date;
 
+import static com.android.volley.VolleyLog.TAG;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,6 +59,7 @@ public class AbdoTimeFragment extends Fragment {
     //GraphView graph;
     GraphView bargraph;
     Integer setSport;
+    String TAG = "TestApp";
 
     public static ArrayList<SportItem> SessionList;
 
@@ -121,6 +124,7 @@ public class AbdoTimeFragment extends Fragment {
 
         for (SportItem session: SessionList) {
             date[i] = new Date(session.getYear(), session.getMonth(), session.getDay());
+            Log.i(TAG, "onCreateView********************************: "+date[i]);
             values[i] = new DataPoint(date[i], session.getRep());
             i++;
         }
