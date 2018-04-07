@@ -161,6 +161,7 @@ public class MainActivity
             switch(uri) {
                 case 0:
                     abdotimeFragment.setStationList(AbdoSessionList);
+
                     processGETRequest_SportHist("/sports/1/abdos");
                     break;
                 case 1:

@@ -234,7 +234,7 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
         pieChart.getLegend().setEnabled(false); //Enlever la légende
         pieChart.setOnChartValueSelectedListener(this);
 
-        text = myView.findViewById(R.id.sport);
+        //text = myView.findViewById(R.id.sport);
 
         return myView;
     }
@@ -246,7 +246,7 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
         mListener.onGlobalFragmentInteraction((int)(h.getX()));
         //text = myView.findViewById(R.id.sport);
 
-        switch((int)(h.getX())) {
+        /*switch((int)(h.getX())) {
             case 0:
                 Log.i(TAG, "onValueSelected : Abdos");
                 text.setText("ABDOS");
@@ -265,7 +265,7 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
                 break;
             default:
                 Log.i(TAG, "onValueSelected : Other");
-        }
+        }*/
 
     }
 

@@ -5,11 +5,28 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.SeekBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.ValueDependentColor;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
@@ -17,6 +34,7 @@ import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -29,7 +47,7 @@ import java.util.Date;
  * Use the {@link RecapFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RecapFragment extends Fragment {
+public class RecapFragment extends Fragment implements SeekBar.OnSeekBarChangeListener, OnChartValueSelectedListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -41,6 +59,19 @@ public class RecapFragment extends Fragment {
     View myView;
     GraphView bargraph;
     private Button goAbdoTime;
+
+
+    private BarChart mChart;
+    private SeekBar mSeekBarX, mSeekBarY;
+    private TextView tvX, tvY;
+
+    public static final int[] COLORS_PERFAPP = {
+            Color.rgb(241, 3, 138), //#f1038a abdo
+            Color.rgb(148, 16, 231), //#9410e7 dorseaux
+            Color.rgb(61, 33, 233),//#3d21e9 cordes
+            Color.rgb(7, 200, 227)//#07C8E3 squats
+    };
+
 
     public static final int COLOR_ABDO = Color.rgb(0, 0, 0);
     public static final int COLOR_DORSEAU = Color.rgb(148, 16, 231);
@@ -90,126 +121,56 @@ public class RecapFragment extends Fragment {
             myView = inflater.inflate(R.layout.fragment_recap, container, false);
         }
 
-        //-----------------------------------------------------------------------------------
-        // Ajout listener
-        //-----------------------------------------------------------------------------------
-        goAbdoTime = myView.findViewById(R.id.button1);
-        goAbdoTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(mListener != null){
-                    mListener.onRecapFragmentInteraction(2);
-                }
-            }
-        });
+        tvX = (TextView) myView.findViewById(R.id.tvXMax);
+        tvY = (TextView) myView.findViewById(R.id.tvYMax);
 
+        mSeekBarX = (SeekBar) myView.findViewById(R.id.seekBar1);
+        mSeekBarX.setOnSeekBarChangeListener(this);
 
+        //mSeekBarY = (SeekBar) myView.findViewById(R.id.seekBar2);
+        //mSeekBarY.setOnSeekBarChangeListener(this);
 
+        mChart = (BarChart) myView.findViewById(R.id.BarChart);
+        mChart.setOnChartValueSelectedListener(this);
 
-        //-----------------------------------------------------------------------------------
-        // generate Dates
-        /*Calendar calendar = Calendar.getInstance();
-        Date d1 = calendar.getTime();
-        calendar.add(Calendar.DATE, 1);
-        Date d2 = calendar.getTime();
-        calendar.add(Calendar.DATE, 1);
-        Date d3 = calendar.getTime();
-        calendar.add(Calendar.DATE, 3);
-        Date d4 = calendar.getTime();
-        calendar.add(Calendar.DATE, 2);
-        Date d5 = calendar.getTime();
-        calendar.add(Calendar.DATE, 1);
-        Date d6 = calendar.getTime();
-        calendar.add(Calendar.DATE, 4);
-        Date d7 = calendar.getTime();
-        calendar.add(Calendar.DATE, 7);
-        Date d8 = calendar.getTime();
-        calendar.add(Calendar.DATE, 1);
-        Date d9 = calendar.getTime();
-        calendar.add(Calendar.DATE, 1);
-        Date d10 = calendar.getTime();
-        calendar.add(Calendar.DATE, 1);
-        Date d11 = calendar.getTime();
-        calendar.add(Calendar.DATE, 1);
-        Date d12 = calendar.getTime();
-        calendar.add(Calendar.DATE, 1);*/
-        Date d1 = new Date(2018, 6, 2);
-        Date d2 = new Date(2018, 6, 10);
-        Date d3 = new Date(2018, 6, 11);
-        Date d4 = new Date(2018, 6, 12);
-        Date d5 = new Date(2018, 6, 15);
-        Date d6 = new Date(2018, 6, 16);
-        Date d7 = new Date(2018, 6, 20);
-        Date d8 = new Date(2018, 6, 30);
-        Date d9 = new Date(2018, 7, 2);
-        Date d10 = new Date(2018, 7, 3);
-        Date d11 = new Date(2018, 7, 12);
-        Date d12 = new Date(2018, 7, 13);
-        Date d13 = new Date(2018, 7, 14);
-        //Date d14 = new Date(2018, 6, 2);//set(year + 1900, month, date);//calendar.getTime();
+        mChart.getDescription().setEnabled(false);
 
+        // if more than 40 entries are displayed in the chart, no values will be
+        // drawn
+        mChart.setMaxVisibleValueCount(40);
 
-        GraphView graph = (GraphView) myView.findViewById(R.id.bargraph);
+        // scaling can now only be done on x- and y-axis separately
+        mChart.setPinchZoom(false);
 
-        // you can directly pass Date objects to DataPoint-Constructor
-        // this will convert the Date to double via Date#getTime()
-        BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[] {
-                new DataPoint(d1, 43),
-                new DataPoint(d2, 10),
-                new DataPoint(d3, 23),
-                new DataPoint(d4, 43),
-                new DataPoint(d5, 10),
-                new DataPoint(d6, 23),
-                new DataPoint(d7, 43),
-                new DataPoint(d8, 10),
-                new DataPoint(d9, 23),
-                new DataPoint(d10, 43),
-                new DataPoint(d11, 10),
-                new DataPoint(d12, 23),
-                new DataPoint(d13, 68)
-        });
-        graph.addSeries(series);
+        mChart.setDrawGridBackground(false);
+        mChart.setDrawBarShadow(false);
 
-        // set date label formatter
-        graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
-        graph.getGridLabelRenderer().setNumHorizontalLabels(3); // only 4 because of the space
+        mChart.setDrawValueAboveBar(false);
+        mChart.setHighlightFullBarEnabled(false);
 
-        // set manual x bounds to have nice steps
-        graph.getViewport().setMinX(d1.getTime());
-        graph.getViewport().setMaxX(d13.getTime());
-        graph.getViewport().setXAxisBoundsManual(true);
+        // change the position of the y-labels
+        YAxis leftAxis = mChart.getAxisLeft();
+        leftAxis.setValueFormatter(new MyAxisValueFormatter());
+        leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
+        mChart.getAxisRight().setEnabled(false);
 
-        // as we use dates as labels, the human rounding to nice readable numbers
-        // is not necessary
-        graph.getGridLabelRenderer().setHumanRounding(false);
-        //-----------------------------------------------------------------------------------
+        XAxis xLabels = mChart.getXAxis();
+        xLabels.setPosition(XAxis.XAxisPosition.TOP);
 
+        // setting data
+        mSeekBarX.setProgress(12);
+        //mSeekBarY.setProgress(100);
 
-        //GraphView graph = (GraphView) myView.findViewById(R.id.bargraph);
-        /*BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[] {
-                new DataPoint(0, -1),
-                new DataPoint(1, 5),
-                new DataPoint(2, 3),
-                new DataPoint(3, 2),
-                new DataPoint(4, 6)
-        });
-        graph.addSeries(series);*/
+        Legend l = mChart.getLegend();
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        l.setDrawInside(false);
+        l.setFormSize(8f);
+        l.setFormToTextSpace(4f);
+        l.setXEntrySpace(6f);
 
-        series.setColor(COLOR_ABDO);
-        // styling
-        /*series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
-            @Override
-            public int get(DataPoint data) {
-                return Color.rgb((int) data.getX()*255/4, (int) Math.abs(data.getY()*255/6), 100);
-            }
-        });*/
-
-        series.setSpacing(5);
-
-        // draw values on top
-        series.setDrawValuesOnTop(false);
-        series.setValuesOnTopColor(Color.RED);
-        series.setValuesOnTopSize(50);
+// mChart.setDrawLegend(false);
 
         return myView;
     }
@@ -242,7 +203,7 @@ public class RecapFragment extends Fragment {
     public void onResume() {
         super.onResume();
         // Set title
-        getActivity().setTitle("Session Details");
+        getActivity().setTitle("Sessions History");
     }
 
     /**
@@ -258,5 +219,98 @@ public class RecapFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onRecapFragmentInteraction(Integer uri);
+    }
+
+
+
+    //***********************************************************************************************
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+        tvX.setText("" + (mSeekBarX.getProgress() + 1));
+        //tvY.setText("" + (mSeekBarY.getProgress()));
+
+        ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
+
+        for (int i = 0; i < mSeekBarX.getProgress() + 1; i++) {
+            float mult = 50;//(mSeekBarY.getProgress() + 1);
+            float val1 = (float) (Math.random() * mult) + mult / 4;
+            float val2 = (float) (Math.random() * mult) + mult / 4;
+            float val3 = (float) (Math.random() * mult) + mult / 4;
+            float val4 = (float) (Math.random() * mult) + mult / 4;
+
+            yVals1.add(new BarEntry(
+                    i,
+                    new float[]{val1, val2, val3, val4},
+                    getResources().getDrawable(R.drawable.ic_launcher_background))); //ESSAI
+        }
+
+        BarDataSet set1;
+
+        if (mChart.getData() != null &&
+                mChart.getData().getDataSetCount() > 0) {
+            set1 = (BarDataSet) mChart.getData().getDataSetByIndex(0);
+            set1.setValues(yVals1);
+            mChart.getData().notifyDataChanged();
+            mChart.notifyDataSetChanged();
+        } else {
+            set1 = new BarDataSet(yVals1, "Statistics Vienna 2014");
+            set1.setDrawIcons(false);
+            set1.setColors(getColors());
+            set1.setStackLabels(new String[]{"Births", "Divorces", "Marriages"});
+
+            ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
+            dataSets.add(set1);
+
+            BarData data = new BarData(dataSets);
+            data.setValueFormatter(new MyValueFormatter());
+            data.setValueTextColor(Color.WHITE);
+
+            mChart.setData(data);
+        }
+
+        mChart.setFitBars(true);
+        mChart.invalidate();
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void onValueSelected(Entry e, Highlight h) {
+
+        BarEntry entry = (BarEntry) e;
+
+        if (entry.getYVals() != null)
+            Log.i("VAL SELECTED", "Value: " + entry.getYVals()[h.getStackIndex()]);
+        else
+            Log.i("VAL SELECTED", "Value: " + entry.getY());
+    }
+
+    @Override
+    public void onNothingSelected() {
+        // TODO Auto-generated method stub
+
+    }
+
+    private int[] getColors() {
+
+        int stacksize = 4;
+
+        // have as many colors as stack-values per entry
+        int[] colors = new int[stacksize];
+
+        colors = COLORS_PERFAPP;
+
+        return colors;
     }
 }
