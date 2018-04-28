@@ -79,7 +79,7 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
     private Button buttonTime;
     private TextView text;
     PieChart pieChart;
-    boolean Time_nRep=true;
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -126,12 +126,12 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
         //-----------------------------------------------------------------------------------
         // Ajout listener
         //-----------------------------------------------------------------------------------
-        buttonRep = myView.findViewById(R.id.buttonRep);
+        /*buttonRep = myView.findViewById(R.id.buttonRep);
         buttonRep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(mListener != null){
-                    Time_nRep=false;
+                    MainActivity.Time_nRep=false;
                     //buttonRep.setBackgroundTintList(getResources().getColorStateList((R.color.colorAccent)));
 
                     //buttonTime.setBackgroundTintList(getResources().getColorStateList((R.color.grey_300)));
@@ -139,33 +139,33 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
                     mListener.onGlobalFragmentInteraction(101);
                 }
             }
-        });
+        });*/
 
-        buttonTime = myView.findViewById(R.id.buttonTime);
+        /*buttonTime = myView.findViewById(R.id.buttonTime);
         buttonTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(mListener != null){
-                    Time_nRep=true;
+                    MainActivity.Time_nRep=true;
                     //buttonTime.setBackgroundTintList(getResources().getColorStateList(R.color.colorAccent));
 
                     //buttonRep.setBackgroundTintList(getResources().getColorStateList(R.color.grey_300));
                     mListener.onGlobalFragmentInteraction(100);
                 }
             }
-        });
+        });*/
 
-        if(Time_nRep)
+        if(MainActivity.Time_nRep)
         {
-            buttonTime.setBackgroundTintList(getResources().getColorStateList(R.color.colorAccent));
+            //buttonTime.setBackgroundTintList(getResources().getColorStateList(R.color.colorAccent));
 
-            buttonRep.setBackgroundTintList(getResources().getColorStateList(R.color.grey_300));
+            //buttonRep.setBackgroundTintList(getResources().getColorStateList(R.color.grey_300));
         }
         else
         {
-            buttonRep.setBackgroundTintList(getResources().getColorStateList((R.color.colorAccent)));
+            //buttonRep.setBackgroundTintList(getResources().getColorStateList((R.color.colorAccent)));
 
-            buttonTime.setBackgroundTintList(getResources().getColorStateList((R.color.grey_300)));
+            //buttonTime.setBackgroundTintList(getResources().getColorStateList((R.color.grey_300)));
 
         }
 

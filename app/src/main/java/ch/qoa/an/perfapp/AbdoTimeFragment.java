@@ -192,6 +192,17 @@ public class AbdoTimeFragment extends Fragment {
         graph.getGridLabelRenderer().setLabelsSpace(10);
         graph.getGridLabelRenderer().setPadding(10);
 
+        if(MainActivity.Time_nRep)
+        {
+            graph.getGridLabelRenderer().setVerticalAxisTitle("Minutes"); //ESSAI
+        }
+        else
+        {
+            graph.getGridLabelRenderer().setVerticalAxisTitle("Répétitions"); //ESSAI
+        }
+
+
+
         // set manual x bounds to have nice steps
         graph.getViewport().setMinX(date[0].getTime());
         graph.getViewport().setMaxX(date[SessionList.size()-1].getTime());
@@ -276,7 +287,24 @@ public class AbdoTimeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         // Set title
-        getActivity().setTitle("Sport History");
+
+        switch(setSport) {
+            case 0:
+                getActivity().setTitle("Sport History: "+"Abdos");
+                break;
+            case 1:
+                getActivity().setTitle("Sport History: "+"Dorsaux");
+                break;
+            case 2:
+                getActivity().setTitle("Sport History: "+"Cordes");
+                break;
+            case 3:
+                getActivity().setTitle("Sport History: "+"Squats");
+                break;
+            default:
+                //Do Something
+        }
+        //getActivity().setTitle("Sport History: "+"Abdo");
     }
 
     public void setSport(Integer sport) {

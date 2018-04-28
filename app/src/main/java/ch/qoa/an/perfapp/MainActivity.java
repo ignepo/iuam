@@ -1,11 +1,18 @@
 package ch.qoa.an.perfapp;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,6 +21,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 import android.support.design.widget.NavigationView;
 
@@ -41,6 +49,11 @@ public class MainActivity
     public static boolean logged = false;
     String TAG = "TestApp";
 
+    BroadcastReceiver mybroadcast = new InternetConnector_Receiver();
+    private static boolean noInternet=false;
+
+    private static Snackbar snackbar;
+
     public static ArrayList<SportItem> AbdoSessionList;
     public static ArrayList<SportItem> DorsauxSessionList;
     public static ArrayList<SportItem> CordeSessionList;
@@ -52,6 +65,7 @@ public class MainActivity
     public static String SquatsNum;
     public static String CordesNum;
 
+    public static boolean Time_nRep=true;
 
     private NavigationView navigationView;
 
@@ -92,6 +106,38 @@ public class MainActivity
 
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //---------------------------------------------------------------------------------
+        // Création de la snackbar qui sera utilisée pour informer l'utilisateur qu'il
+        // n'y a pas de connexion internet.
+        //---------------------------------------------------------------------------------
+        snackbar = Snackbar.make(findViewById(R.id.fragment_container), "NO INTERNET CONNECTION", Snackbar.LENGTH_INDEFINITE);
+        View sbView = snackbar.getView();
+        sbView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorAccent));
+
+        //---------------------------------------------------------------------------------
+        // Détection de la connexion internet à travers un broadcast
+        //---------------------------------------------------------------------------------
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(mybroadcast, intentFilter);
+
+        isNetworkAvailable();
+
+    }
+
+
+
+    //---------------------------------------------------------------------------------
+    // Check de la connection internet
+    //---------------------------------------------------------------------------------
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+
+        return activeNetworkInfo != null;
+
     }
 
     private void callFragment(Fragment fragmentToCall, String title) {
@@ -146,8 +192,8 @@ public class MainActivity
     public void onGlobalFragmentInteraction(Integer uri) {
         if(uri == 800)
         {
-            //processGETRequest_Hist("/days/1/");
-            callFragment(recapFragment, "Recap");
+            processGETRequest_Hist("/days/1");
+            //callFragment(recapFragment, "Recap");
         }
         else if (uri == 100)
         {
@@ -404,11 +450,12 @@ public class MainActivity
 
                             for(int k=0; k<sessions.length(); k++)
                             {
+                                Log.i(TAG, "onSuccessResponse: *************ESSAI1");
                                 JSONObject SessionK = sessions.getJSONObject(k);
 
                                 initListAll(SessionK);
                             }
-
+                            Log.i(TAG, "onSuccessResponse: *************ESSAI2");
                             callFragment(recapFragment, "Recap");
                             /*FragmentTransaction fragTransaction =  getSupportFragmentManager().beginTransaction();
                             fragTransaction.detach(abdotimeFragment);
@@ -548,12 +595,21 @@ public class MainActivity
 
         try {
 
-            Integer  AbdosValue = Integer.parseInt(sessionK.getString("Abdo"));
+            Integer  AbdosValue = Integer.parseInt(sessionK.getString("Abdos"));
             Integer  DoresauxValue = Integer.parseInt(sessionK.getString("Dorsaux"));
             Integer  CordeValue = Integer.parseInt(sessionK.getString("Corde"));
             Integer  SquatsValue = Integer.parseInt(sessionK.getString("Squats"));
 
             String  Date = sessionK.getString("date");
+
+            Log.i(TAG, "initListAll: "+Date);
+            Log.i(TAG, "initListAll: "+AbdosValue);
+            Log.i(TAG, "initListAll: "+DoresauxValue);
+            Log.i(TAG, "initListAll: "+CordeValue);
+            Log.i(TAG, "initListAll: "+SquatsValue);
+
+
+
             String[] DateS = Date.split("-");
             Integer Year = Integer.parseInt(DateS[0]);
             Integer Month = Integer.parseInt(DateS[1]);
@@ -575,6 +631,40 @@ public class MainActivity
             e.printStackTrace();
         }
 
+    }
+
+
+    //---------------------------------------------------------------------------------
+    // Boradcast qui check lorsqu'il y a un changement sur la connecitivé
+    //---------------------------------------------------------------------------------
+    public class InternetConnector_Receiver extends BroadcastReceiver {
+
+        public InternetConnector_Receiver() {
+        }
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            try {
+                // Check internet connection and accrding to state change the
+                // text of activity by calling method
+                if (isNetworkAvailable()) {
+                    if(noInternet)
+                    {
+                        snackbar.setDuration(0);
+                        snackbar.show();
+                    }
+                    noInternet=false;
+                    processGETRequest_TimeHist(); //ESSAI
+                } else {
+                    snackbar.setDuration(Snackbar.LENGTH_INDEFINITE);
+                    snackbar.show();
+                    noInternet = true;
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }
