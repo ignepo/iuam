@@ -113,11 +113,8 @@
 
     <string name="NoInternet">NO INTERNET CONNECTION</string>
 
-
-
-
-
-
+    <string name="Credit">This sportive application was developped by :</string>
+    <string name="TitleCredit">Credit</string>
 
 
 </resources>

@@ -40,12 +40,14 @@ public class MainActivity
         RecapFragment.OnFragmentInteractionListener,
         AbdoTimeFragment.OnFragmentInteractionListener,
         GlobalFragment.OnFragmentInteractionListener,
-        ProfileFragment.OnFragmentInteractionListener{
+        ProfileFragment.OnFragmentInteractionListener,
+        CreditFragment.OnFragmentInteractionListener{
 
     RecapFragment recapFragment;
     AbdoTimeFragment abdotimeFragment;
     GlobalFragment globalFragment;
     ProfileFragment profileFragment;
+    CreditFragment creditFragment;
     public static boolean logged = false;
     String TAG = "TestApp";
 
@@ -78,6 +80,7 @@ public class MainActivity
         abdotimeFragment = new AbdoTimeFragment();
         globalFragment = new GlobalFragment();
         profileFragment = new ProfileFragment();
+        creditFragment = new CreditFragment();
 
         processGETRequest_TimeHist();
 
@@ -162,6 +165,11 @@ public class MainActivity
         callFragment(profileFragment, getString(R.string.TitleProfile));
         //detailFragment.updateElement(itemAtPosition);
         //callFragment(detailFragment, getString(R.string.toolbarTitleDetail));
+    }
+
+    @Override
+    public void onCreditFragmentInteraction(Integer uri) {
+        callFragment(creditFragment, getString(R.string.TitleCredit));
     }
 
     @Override
@@ -261,7 +269,7 @@ public class MainActivity
             //onDrawerFragmentInteraction(listFragment, getString(R.string.toolbarTitleList));
         }else if (id == R.id.nav_credit)
         {
-
+            onCreditFragmentInteraction(0);
         }
         else if (id == R.id.nav_loout)
         {

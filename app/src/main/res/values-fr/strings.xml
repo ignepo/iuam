@@ -113,4 +113,6 @@
 
     <string name="NoInternet">PAS DE CONNEXION INTERNET</string>
 
+    <string name="Credit">Cette application sportive (PerfApp) a été dévelopée par :</string>
+    <string name="TitleCredit">Credit</string>
 </resources>
