@@ -194,11 +194,11 @@ public class AbdoTimeFragment extends Fragment {
 
         if(MainActivity.Time_nRep)
         {
-            graph.getGridLabelRenderer().setVerticalAxisTitle("Minutes"); //ESSAI
+            graph.getGridLabelRenderer().setVerticalAxisTitle(getString(R.string.ModeTime)); //ESSAI
         }
         else
         {
-            graph.getGridLabelRenderer().setVerticalAxisTitle("Répétitions"); //ESSAI
+            graph.getGridLabelRenderer().setVerticalAxisTitle(getString(R.string.ModeRep)); //ESSAI
         }
 
 
@@ -290,16 +290,16 @@ public class AbdoTimeFragment extends Fragment {
 
         switch(setSport) {
             case 0:
-                getActivity().setTitle("Sport History: "+"Abdos");
+                getActivity().setTitle(getString(R.string.TitleAbdo));
                 break;
             case 1:
-                getActivity().setTitle("Sport History: "+"Dorsaux");
+                getActivity().setTitle(getString(R.string.TitleDorsaux));
                 break;
             case 2:
-                getActivity().setTitle("Sport History: "+"Cordes");
+                getActivity().setTitle(getString(R.string.TitleCorde));
                 break;
             case 3:
-                getActivity().setTitle("Sport History: "+"Squats");
+                getActivity().setTitle(getString(R.string.TitleSquat));
                 break;
             default:
                 //Do Something
@@ -311,7 +311,7 @@ public class AbdoTimeFragment extends Fragment {
         setSport = sport;
     }
 
-    public void setStationList(ArrayList<SportItem> sessionList) {
+    public void setSessionList(ArrayList<SportItem> sessionList) {
         this.SessionList = sessionList;
     }
 

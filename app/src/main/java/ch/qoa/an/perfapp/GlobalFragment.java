@@ -253,10 +253,10 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
         yValues.add(new PieEntry(35f, "Squat"));//x=3 dans higlight*/
 
         //while(AbdosNum == "null" );
-        yValues.add(new PieEntry(Float.parseFloat(MainActivity.AbdosNum), "Abdo")); //x=0 dans higlight
-        yValues.add(new PieEntry(Float.parseFloat(MainActivity.DorseauxNum), "Dorseaux"));//x=1 dans higlight
-        yValues.add(new PieEntry(Float.parseFloat(MainActivity.CordesNum), "Corde"));//x=2 dans higlight
-        yValues.add(new PieEntry(Float.parseFloat(MainActivity.SquatsNum), "Squat"));//x=3 dans higlight
+        yValues.add(new PieEntry(Float.parseFloat(MainActivity.AbdosNum), getString(R.string.Abdos))); //x=0 dans higlight
+        yValues.add(new PieEntry(Float.parseFloat(MainActivity.DorseauxNum), getString(R.string.Dorsaux)));//x=1 dans higlight
+        yValues.add(new PieEntry(Float.parseFloat(MainActivity.CordesNum), getString(R.string.Corde)));//x=2 dans higlight
+        yValues.add(new PieEntry(Float.parseFloat(MainActivity.SquatsNum), getString(R.string.Squats)));//x=3 dans higlight
 
         //yValues.add(new PieEntry(40f, "partye"));
         //yValues.add(new PieEntry(23f, "partyf"));
@@ -346,7 +346,7 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
     public void onResume() {
         super.onResume();
         // Set title
-        getActivity().setTitle("PerfApp");
+        getActivity().setTitle(getString(R.string.PerfApp));
     }
 
 

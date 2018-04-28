@@ -5,18 +5,18 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@mipmap/ic_home"
-            android:title="Home" />
+            android:title="@string/DrawerHome" />
         <item
             android:id="@+id/nav_profile"
             android:icon="@mipmap/ic_profile"
-            android:title="Profile" />
+            android:title="@string/DrawerProfile" />
         <item
             android:id="@+id/nav_credit"
             android:icon="@mipmap/ic_credit"
-            android:title="Credit" />
+            android:title="@string/DrawerCredit" />
         <item
             android:id="@+id/nav_loout"
             android:icon="@mipmap/ic_logout"
-            android:title="LogOut" />
+            android:title="@string/DrawerLogOut" />
     </group>
 </menu>

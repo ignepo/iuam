@@ -111,7 +111,7 @@ public class MainActivity
         // Création de la snackbar qui sera utilisée pour informer l'utilisateur qu'il
         // n'y a pas de connexion internet.
         //---------------------------------------------------------------------------------
-        snackbar = Snackbar.make(findViewById(R.id.fragment_container), "NO INTERNET CONNECTION", Snackbar.LENGTH_INDEFINITE);
+        snackbar = Snackbar.make(findViewById(R.id.fragment_container), getString(R.string.NoInternet), Snackbar.LENGTH_INDEFINITE);
         View sbView = snackbar.getView();
         sbView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorAccent));
 
@@ -159,14 +159,14 @@ public class MainActivity
 
     @Override
     public void onProfileFragmentInteraction(Integer uri) {
-        callFragment(profileFragment, "Profile");
+        callFragment(profileFragment, getString(R.string.TitleProfile));
         //detailFragment.updateElement(itemAtPosition);
         //callFragment(detailFragment, getString(R.string.toolbarTitleDetail));
     }
 
     @Override
     public void onRecapFragmentInteraction(Integer uri) {
-        callFragment(globalFragment, "PerfApp");
+        callFragment(globalFragment, getString(R.string.PerfApp));
         //detailFragment.updateElement(itemAtPosition);
         //callFragment(detailFragment, getString(R.string.toolbarTitleDetail));
     }
@@ -182,7 +182,7 @@ public class MainActivity
             startActivity(EmailPasswordActivity.intentLogin);
         }
         else {
-            callFragment(recapFragment, "Recap");
+            callFragment(recapFragment, getString(R.string.TitleHist));
         }
         //detailFragment.updateElement(itemAtPosition);
         //callFragment(detailFragment, getString(R.string.toolbarTitleDetail));
@@ -192,15 +192,18 @@ public class MainActivity
     public void onGlobalFragmentInteraction(Integer uri) {
         if(uri == 800)
         {
+            recapFragment.setSessionHistList(AllSessionList);
             processGETRequest_Hist("/days/1");
             //callFragment(recapFragment, "Recap");
         }
         else if (uri == 100)
         {
+            //recapFragment.setSessionHistList(AllSessionList);
             processGETRequest_TimeHist();
         }
         else if(uri == 101)
         {
+            //recapFragment.setSessionHistList(AllSessionList);
             processGETRequest_RepHist();
         }
         else
@@ -209,20 +212,20 @@ public class MainActivity
 
             switch(uri) {
                 case 0:
-                    abdotimeFragment.setStationList(AbdoSessionList);
+                    abdotimeFragment.setSessionList(AbdoSessionList);
 
                     processGETRequest_SportHist("/sports/1/abdos");
                     break;
                 case 1:
-                    abdotimeFragment.setStationList(DorsauxSessionList);
+                    abdotimeFragment.setSessionList(DorsauxSessionList);
                     processGETRequest_SportHist("/sports/1/dorsaux");
                     break;
                 case 2:
-                    abdotimeFragment.setStationList(CordeSessionList);
+                    abdotimeFragment.setSessionList(CordeSessionList);
                     processGETRequest_SportHist("/sports/1/corde");
                     break;
                 case 3:
-                    abdotimeFragment.setStationList(SquatsSessionList);
+                    abdotimeFragment.setSessionList(SquatsSessionList);
                     processGETRequest_SportHist("/sports/1/squats");
                     break;
                 default:
@@ -251,7 +254,7 @@ public class MainActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            callFragment(globalFragment, "PerfApp");
+            callFragment(globalFragment, getString(R.string.PerfApp));
             //onDrawerFragmentInteraction(mapFragment, getString(R.string.toolbarTitleMap));
         } else if (id == R.id.nav_profile) {
             onProfileFragmentInteraction(0);
@@ -600,6 +603,11 @@ public class MainActivity
             Integer  CordeValue = Integer.parseInt(sessionK.getString("Corde"));
             Integer  SquatsValue = Integer.parseInt(sessionK.getString("Squats"));
 
+            Integer  AbdosTimeValue = Integer.parseInt(sessionK.getString("Abdos_time"));
+            Integer  DoresauxTimeValue = Integer.parseInt(sessionK.getString("Dorsaux_time"));
+            Integer  CordeTimeValue = Integer.parseInt(sessionK.getString("Corde_time"));
+            Integer  SquatsTimeValue = Integer.parseInt(sessionK.getString("Squats_time"));
+
             String  Date = sessionK.getString("date");
 
             Log.i(TAG, "initListAll: "+Date);
@@ -607,8 +615,6 @@ public class MainActivity
             Log.i(TAG, "initListAll: "+DoresauxValue);
             Log.i(TAG, "initListAll: "+CordeValue);
             Log.i(TAG, "initListAll: "+SquatsValue);
-
-
 
             String[] DateS = Date.split("-");
             Integer Year = Integer.parseInt(DateS[0]);
@@ -621,6 +627,11 @@ public class MainActivity
             AllSession.setRepDorsaux(DoresauxValue);
             AllSession.setRepCorde(CordeValue);
             AllSession.setRepSquats(SquatsValue);
+
+            AllSession.setTimeAbdos(AbdosTimeValue);
+            AllSession.setTimeDorsaux(DoresauxTimeValue);
+            AllSession.setTimeCorde(CordeTimeValue);
+            AllSession.setTimeSquats(SquatsTimeValue);
 
             AllSession.setYear(Year);
             AllSession.setMonth(Month);

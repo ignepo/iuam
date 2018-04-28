@@ -69,7 +69,7 @@ public class ProfileFragment extends Fragment {
     public void onResume() {
         super.onResume();
         // Set title
-        getActivity().setTitle("Profile");
+        getActivity().setTitle(getString(R.string.TitleProfile));
     }
 
     /**

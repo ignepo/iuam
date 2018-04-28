@@ -18,30 +18,30 @@
 
     <string name="hint_user_id">User ID</string>
     <string name="get_custom_token">Get Token</string>
-    <string name="sign_in">Sign In</string>
-    <string name="create_account">Create Account</string>
+    <string name="sign_in">Se connecter</string>
+    <string name="create_account">Créer accompte</string>
     <string name="send_link">Send Link</string>
-    <string name="sign_out">Sign Out</string>
-    <string name="verify_email">Verify Email</string>
-    <string name="disconnect">Disconnect</string>
+    <string name="sign_out">Déconnecter</string>
+    <string name="verify_email">Verifier l\'E-mail</string>
+    <string name="disconnect">Déconnecter</string>
     <string name="loading">Loading…</string>
     <string name="custom_token">Custom Token</string>
-    <string name="signed_in">Signed In</string>
-    <string name="signed_out">Signed Out</string>
+    <string name="signed_in">Connexion</string>
+    <string name="signed_out">Déconnecté</string>
     <string name="token_null">Token: null</string>
-    <string name="hint_email">Email</string>
-    <string name="hint_password">Password</string>
+    <string name="hint_email">E-mail</string>
+    <string name="hint_password">Mot de passe</string>
     <string name="desc_firebase_lockup">Firebase logo and name</string>
-    <string name="auth_failed">Authentication failed</string>
+    <string name="auth_failed">Echec de la connexion</string>
     <string name="start_phone_auth">Start</string>
     <string name="verify_phone_auth">Verify</string>
     <string name="resend_phone_auth">Resend</string>
     <string name="hint_phone_number">Phone Number</string>
     <string name="hint_verification_code">Verification Code</string>
     <string name="status_code_sent">Code Sent</string>
-    <string name="status_verification_failed">Verification failed</string>
-    <string name="status_verification_succeeded">Verification succeeded</string>
-    <string name="status_sign_in_failed">Sign-in failed</string>
+    <string name="status_verification_failed">Echec de la verification</string>
+    <string name="status_verification_succeeded">Succès de verification</string>
+    <string name="status_sign_in_failed">Echec de connexion</string>
     <string name="instant_validation">(instant validation)</string>
 
     <string name="firebase_status_fmt">Firebase User: %s</string>
@@ -74,50 +74,43 @@
     <string name="email_fmt">Email: %s</string>
 
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open">Ouvrir le drawer</string>
+    <string name="navigation_drawer_close">Fermer le Drawer</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="Authentification">Authentication failed.</string>
+    <string name="Authentification">Echec de la connexion</string>
 
     <!-- Add all text that need to be translate-->
-    <string name="radioButton">Time representation in [%]</string>
-    <string name="radioButton2">Repetition representation in [%]</string>
+    <string name="radioButton">Représentation du temps en [%]</string>
+    <string name="radioButton2">Représentation des répétitions en [%]</string>
 
     <string name="Squats">Squats</string>
-    <string name="Abdos">Crunchs</string>
-    <string name="Dorsaux">BkExt</string>
-    <string name="Corde">Rope</string>
+    <string name="Abdos">Abdos</string>
+    <string name="Dorsaux">Dorsaux</string>
+    <string name="Corde">Corde</string>
 
 
     <string name="ModeTime">Minutes</string>
-    <string name="ModeRep">Repetitions</string>
+    <string name="ModeRep">Répétitions</string>
 
-    <string name="TitleAbdo">Sport History: Abdos</string>
-    <string name="TitleDorsaux">Sport History: Dorsaux</string>
-    <string name="TitleCorde">Sport History: Corde</string>
-    <string name="TitleSquat">Sport History: Squats</string>
+    <string name="TitleAbdo">Historique: Abdos</string>
+    <string name="TitleDorsaux">Historique: Dorsaux</string>
+    <string name="TitleCorde">Historique: Corde</string>
+    <string name="TitleSquat">Historique: Squats</string>
     <string name="PerfApp">PerfApp</string>
     <string name="TitleProfile">Profile</string>
-    <string name="TitleHist">Sessions History</string>
+    <string name="TitleHist">Historique des sessions</string>
 
     <string name="Age">Age</string>
-    <string name="Weight">Weight</string>
+    <string name="Weight">Poids</string>
 
     <string name="DrawerHome">Home</string>
     <string name="DrawerProfile">Profile</string>
     <string name="DrawerCredit">Credit</string>
     <string name="DrawerLogOut">LogOut</string>
 
-    <string name="NoInternet">NO INTERNET CONNECTION</string>
-
-
-
-
-
-
-
+    <string name="NoInternet">PAS DE CONNEXION INTERNET</string>
 
 </resources>

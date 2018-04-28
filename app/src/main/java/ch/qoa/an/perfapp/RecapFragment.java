@@ -53,6 +53,8 @@ public class RecapFragment extends Fragment implements OnChartValueSelectedListe
     private Button goAbdoTime;
     String TAG = "TestApp";
 
+    public static ArrayList<SessionItem> AllSessionList;
+
 
     private BarChart mChart;
     private SeekBar mSeekBarX, mSeekBarY;
@@ -146,7 +148,45 @@ public class RecapFragment extends Fragment implements OnChartValueSelectedListe
         ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
 
         //for (int i = 0; i < mSeekBarX.getProgress() + 1; i++) {
-        for (int i = 0; i < 10; i++) {
+
+        float val1;
+        float val2;
+        float val3;
+        float val4;
+
+
+        for (SessionItem session: AllSessionList) {
+            //date[i] = new Date(session.getYear(), session.getMonth(), session.getDay());
+            //calendar.getTimeinMilis();
+            //int date = 731+i;
+            Date date = new Date(session.getYear(), session.getMonth()-1, session.getDay()); //faire month-1
+            //getDay(date)
+            //Date date = new Date(2018, 6, i+1);
+            Log.i(TAG, "onCreateView: "+getDay(date));
+            //float mult = 50;
+            if(MainActivity.Time_nRep)
+            {
+                val1 = session.getTimeAbdos();
+                val2 = session.getTimeCorde();
+                val3 = session.getTimeDorsaux();
+                val4 = session.getTimeSquats();
+            }
+            else
+            {
+                val1 = session.getRepAbdos();
+                val2 = session.getRepCorde();
+                val3 = session.getRepDorsaux();
+                val4 = session.getRepSquats();
+            }
+
+
+            yVals1.add(new BarEntry(
+                    getDay(date)+731, //731=2018 // 367 = 2017 // 0=2016
+                    new float[]{val1, val2, val3, val4})); //ESSAI
+        }
+
+
+        /*for (int i = 0; i < 10; i++) {
 
             //calendar.getTimeinMilis();
             //int date = 731+i;
@@ -163,7 +203,7 @@ public class RecapFragment extends Fragment implements OnChartValueSelectedListe
             yVals1.add(new BarEntry(
                     getDay(date)+731, //731=2018 // 367 = 2017 // 0=2016
                     new float[]{val1, val2, val3, val4})); //ESSAI
-        }
+        }*/
 
         BarDataSet set1;
 
@@ -177,7 +217,7 @@ public class RecapFragment extends Fragment implements OnChartValueSelectedListe
             set1 = new BarDataSet(yVals1, "");
             set1.setDrawIcons(false);
             set1.setColors(getColors());
-            set1.setStackLabels(new String[]{"Abdos", "Dorsaux", "Cordes", "Squats"});
+            set1.setStackLabels(new String[]{getString(R.string.Abdos), getString(R.string.Dorsaux), getString(R.string.Corde), getString(R.string.Squats)});
 
             ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
             dataSets.add(set1);
@@ -235,7 +275,7 @@ public class RecapFragment extends Fragment implements OnChartValueSelectedListe
     public void onResume() {
         super.onResume();
         // Set title
-        getActivity().setTitle("Sessions History");
+        getActivity().setTitle(getString(R.string.TitleHist));
     }
 
     /**
@@ -280,6 +320,10 @@ public class RecapFragment extends Fragment implements OnChartValueSelectedListe
         colors = COLORS_PERFAPP;
 
         return colors;
+    }
+
+    public void setSessionHistList(ArrayList<SessionItem> allSessionList) {
+        this.AllSessionList = allSessionList;
     }
 
     public static int getDay(Date date) {

@@ -32,7 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Time representation in [%]" />
+                android:text="@string/radioButton" />
 
             <RadioButton
                 android:id="@+id/radioButton2"
@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dip"
                 android:layout_weight="1"
-                android:text="Repetition representation in [%]" />
+                android:text="@string/radioButton2" />
         </RadioGroup>
 
         <!--<LinearLayout

@@ -9,6 +9,10 @@ public class SessionItem {
     private Integer dorsaux;
     private Integer corde;
     private Integer squats;
+    private Integer abdosTime;
+    private Integer dorsauxTime;
+    private Integer cordeTime;
+    private Integer squatsTime;
 
     Integer getYear(){
         return year;
@@ -57,6 +61,34 @@ public class SessionItem {
     }
     void setRepDorsaux(Integer RepDorsaux){
         this.dorsaux=RepDorsaux;
+    }
+
+    Integer getTimeCorde(){
+        return cordeTime;
+    }
+    void setTimeCorde(Integer TimeCorde){
+        this.cordeTime=TimeCorde;
+    }
+
+    Integer getTimeSquats(){
+        return squatsTime;
+    }
+    void setTimeSquats(Integer TimeSquats){
+        this.squatsTime=TimeSquats;
+    }
+
+    Integer getTimeAbdos(){
+        return abdosTime;
+    }
+    void setTimeAbdos(Integer TimeAbdo){
+        this.abdosTime=TimeAbdo;
+    }
+
+    Integer getTimeDorsaux(){
+        return dorsauxTime;
+    }
+    void setTimeDorsaux(Integer TimeDorsaux){
+        this.dorsauxTime=TimeDorsaux;
     }
 
 
