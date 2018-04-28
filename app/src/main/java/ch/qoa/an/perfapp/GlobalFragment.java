@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -75,8 +76,11 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
     private String mParam1;
     private String mParam2;
     View myView;
-    private Button buttonRep;
-    private Button buttonTime;
+    //private Button buttonRep;
+    //private Button buttonTime;
+    private RadioButton buttonRep;
+    private RadioButton buttonTime;
+    private boolean first = true;
     private TextView text;
     PieChart pieChart;
 
@@ -122,7 +126,47 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
         Log.i(TAG, "onCreanteView: ********FRAGMENT*********");
 
         //processGETRequest();
+        buttonRep = myView.findViewById(R.id.radioButton2);
+        buttonTime = myView.findViewById(R.id.radioButton);
 
+        if(first)
+        {
+            buttonTime.setChecked(true);
+            first=false;
+        }
+
+        /*if(buttonRep.isChecked())
+        {
+            Log.i(TAG, "onCreateView: RADIO BUTTON REP");
+            MainActivity.Time_nRep=false;
+            mListener.onGlobalFragmentInteraction(101);
+        }
+        else
+        {
+            Log.i(TAG, "onCreateView: RADIO BUTTON REP");
+            MainActivity.Time_nRep=true;
+            mListener.onGlobalFragmentInteraction(100);
+        }*/
+
+        buttonRep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mListener != null){
+                    MainActivity.Time_nRep=false;
+                    mListener.onGlobalFragmentInteraction(101);
+                }
+            }
+        });
+
+        buttonTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mListener != null){
+                    MainActivity.Time_nRep=true;
+                    mListener.onGlobalFragmentInteraction(100);
+                }
+            }
+        });
         //-----------------------------------------------------------------------------------
         // Ajout listener
         //-----------------------------------------------------------------------------------
@@ -184,7 +228,7 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
         //-----------------------------------------------------------------------------------
         pieChart = myView.findViewById(R.id.piechart);
         pieChart.setTouchEnabled(true);
-        pieChart.setUsePercentValues(false); //Converti en pourcentage
+        pieChart.setUsePercentValues(true); //Converti en pourcentage
         pieChart.getDescription().setEnabled(false); //Text dans le chart
         //pieChart.setDrawEntryLabels(false);
         pieChart.setDrawEntryLabels(true);//Text dans le chart

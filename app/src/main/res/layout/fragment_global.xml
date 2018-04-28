@@ -22,11 +22,26 @@
             android:layout_width="match_parent"
             android:layout_height="400dip" />
 
-        <TextView
-            android:id="@+id/sport"
+        <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textColor="@color/colorPrimary" />
+            android:layout_marginLeft="70dip">
+
+            <RadioButton
+                android:id="@+id/radioButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Time representation in [%]" />
+
+            <RadioButton
+                android:id="@+id/radioButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dip"
+                android:layout_weight="1"
+                android:text="Repetition representation in [%]" />
+        </RadioGroup>
 
         <!--<LinearLayout
             android:layout_width="match_parent"
