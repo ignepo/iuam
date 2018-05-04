@@ -53,7 +53,7 @@ public class RecapFragment extends Fragment implements OnChartValueSelectedListe
     private Button goAbdoTime;
     String TAG = "TestApp";
 
-    public static ArrayList<SessionItem> AllSessionList;
+    public static ArrayList<SessionItem> AllSessionListRecap;
 
 
     private BarChart mChart;
@@ -155,7 +155,7 @@ public class RecapFragment extends Fragment implements OnChartValueSelectedListe
         float val4;
 
 
-        for (SessionItem session: AllSessionList) {
+        for (SessionItem session: AllSessionListRecap) {
             //date[i] = new Date(session.getYear(), session.getMonth(), session.getDay());
             //calendar.getTimeinMilis();
             //int date = 731+i;
@@ -167,15 +167,15 @@ public class RecapFragment extends Fragment implements OnChartValueSelectedListe
             if(MainActivity.Time_nRep)
             {
                 val1 = session.getTimeAbdos();
-                val2 = session.getTimeCorde();
-                val3 = session.getTimeDorsaux();
+                val2 = session.getTimeDorsaux();
+                val3 = session.getTimeCorde();
                 val4 = session.getTimeSquats();
             }
             else
             {
                 val1 = session.getRepAbdos();
-                val2 = session.getRepCorde();
-                val3 = session.getRepDorsaux();
+                val2 = session.getRepDorsaux();
+                val3 = session.getRepCorde();
                 val4 = session.getRepSquats();
             }
 
@@ -195,10 +195,10 @@ public class RecapFragment extends Fragment implements OnChartValueSelectedListe
             //Date date = new Date(2018, 6, i+1);
             Log.i(TAG, "onCreateView: "+getDay(date));
             float mult = 50;
-            float val1 = (float) (Math.random() * mult) + mult / 4;
-            float val2 = (float) (Math.random() * mult) + mult / 4;
-            float val3 = (float) (Math.random() * mult) + mult / 4;
-            float val4 = (float) (Math.random() * mult) + mult / 4;
+            val1 = (float) (Math.random() * mult) + mult / 4;
+            val2 = (float) (Math.random() * mult) + mult / 4;
+            val3 = (float) (Math.random() * mult) + mult / 4;
+            val4 = (float) (Math.random() * mult) + mult / 4;
 
             yVals1.add(new BarEntry(
                     getDay(date)+731, //731=2018 // 367 = 2017 // 0=2016
@@ -323,7 +323,7 @@ public class RecapFragment extends Fragment implements OnChartValueSelectedListe
     }
 
     public void setSessionHistList(ArrayList<SessionItem> allSessionList) {
-        this.AllSessionList = allSessionList;
+        this.AllSessionListRecap = allSessionList;
     }
 
     public static int getDay(Date date) {

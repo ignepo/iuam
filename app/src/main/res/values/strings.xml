@@ -115,6 +115,7 @@
 
     <string name="Credit">This sportive application was developped by :</string>
     <string name="TitleCredit">Credit</string>
+    <string name="DrawerIntro">Demo</string>
 
 
 </resources>

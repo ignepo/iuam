@@ -7,8 +7,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -62,6 +65,13 @@ public class AbdoTimeFragment extends Fragment {
     String TAG = "TestApp";
 
     public static ArrayList<SportItem> SessionList;
+
+    private float mScaleFactor = 1.f;
+
+
+    TextView textMsg;
+
+    private ScaleGestureDetector scaleGestureDetector;
 
     //Date[] date = new Date[13];
     //DataPoint[] values = new DataPoint[13];
@@ -120,12 +130,37 @@ public class AbdoTimeFragment extends Fragment {
         DataPoint[] values = new DataPoint[SessionList.size()];
 
         Integer i=0;
-
+        long date_min=0;
+        long date_max=0;
+        Integer Ymax =0;
 
         for (SportItem session: SessionList) {
             date[i] = new Date(session.getYear(), session.getMonth(), session.getDay());
             Log.i(TAG, "onCreateView********************************: "+date[i]);
             values[i] = new DataPoint(date[i], session.getRep());
+
+            if(i==0)
+            {
+                Ymax=session.getRep();
+                date_min=date[i].getTime();
+                date_max=date[i].getTime();
+            }
+
+            if(session.getRep()>Ymax)
+            {
+                Ymax=session.getRep();
+            }
+
+            if(date[i].getTime()< date_min)
+            {
+                date_min = date[i].getTime();
+            }
+
+            if(date[i].getTime()> date_max)
+            {
+                date_max = date[i].getTime();
+            }
+
             i++;
         }
 
@@ -185,12 +220,12 @@ public class AbdoTimeFragment extends Fragment {
 
         // set date label formatter
         graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
-        graph.getGridLabelRenderer().setNumHorizontalLabels(4); // only 4 because of the space
+        //graph.getGridLabelRenderer().setNumHorizontalLabels(10); // only 4 because of the space
         //graph.getGridLabelRenderer().setLabelHorizontalHeight(20);
-        graph.getGridLabelRenderer().setTextSize(25);
+        graph.getGridLabelRenderer().setTextSize(25); //25
         graph.getGridLabelRenderer().setHorizontalLabelsAngle(90);
         graph.getGridLabelRenderer().setLabelsSpace(10);
-        graph.getGridLabelRenderer().setPadding(10);
+        //graph.getGridLabelRenderer().setPadding(5); //10
 
         if(MainActivity.Time_nRep)
         {
@@ -201,21 +236,25 @@ public class AbdoTimeFragment extends Fragment {
             graph.getGridLabelRenderer().setVerticalAxisTitle(getString(R.string.ModeRep)); //ESSAI
         }
 
+        graph.getViewport().setXAxisBoundsManual(true); // pour ne pas sortir du graph mettre à false
 
+        //graph.getViewport().setMinX(date_min-200000000);
+        //graph.getViewport().setMaxX(date_max+200000000);
+        graph.getViewport().setMinX(series.getLowestValueX()-200000000);
+        graph.getViewport().setMaxX(series.getHighestValueX()+200000000);
 
-        // set manual x bounds to have nice steps
-        graph.getViewport().setMinX(date[0].getTime());
-        graph.getViewport().setMaxX(date[SessionList.size()-1].getTime());
-
-        graph.getViewport().setMinY(0);
-
-        graph.getViewport().setXAxisBoundsManual(true);
         graph.getViewport().setYAxisBoundsManual(true);
+        graph.getViewport().setMinY(0);
+        graph.getViewport().setMaxY(Ymax+10);
+
         graph.getViewport().setScalable(true);
-        graph.getViewport().setScalableY(false);
+        graph.getViewport().setScrollable(true);
+        //graph.getViewport().setScalableY(false);
 
         graph.getViewport().setBorderColor(Color.BLACK);
-        graph.getViewport().setDrawBorder(true);
+        graph.getViewport().setDrawBorder(false);
+
+        //graph.getViewport().setMaxXAxisSize(100);
 
         // as we use dates as labels, the human rounding to nice readable numbers
         // is not necessary
@@ -248,8 +287,7 @@ public class AbdoTimeFragment extends Fragment {
                 //Do Something
         }
 
-        series.setSpacing(10);
-
+        series.setSpacing(10); //10
         // draw values on top
         series.setDrawValuesOnTop(false);
         //series.setAnimated(true);

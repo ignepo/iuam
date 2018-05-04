@@ -4,9 +4,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -49,7 +51,7 @@ public class MainActivity
     ProfileFragment profileFragment;
     CreditFragment creditFragment;
     public static boolean logged = false;
-    String TAG = "TestApp";
+    String TAG = "TestApp1";
 
     BroadcastReceiver mybroadcast = new InternetConnector_Receiver();
     private static boolean noInternet=false;
@@ -83,6 +85,8 @@ public class MainActivity
         creditFragment = new CreditFragment();
 
         processGETRequest_TimeHist();
+
+
 
         AbdoSessionList = new ArrayList<>();
         DorsauxSessionList = new ArrayList<>();
@@ -206,12 +210,10 @@ public class MainActivity
         }
         else if (uri == 100)
         {
-            //recapFragment.setSessionHistList(AllSessionList);
             processGETRequest_TimeHist();
         }
         else if(uri == 101)
         {
-            //recapFragment.setSessionHistList(AllSessionList);
             processGETRequest_RepHist();
         }
         else
@@ -267,7 +269,13 @@ public class MainActivity
         } else if (id == R.id.nav_profile) {
             onProfileFragmentInteraction(0);
             //onDrawerFragmentInteraction(listFragment, getString(R.string.toolbarTitleList));
-        }else if (id == R.id.nav_credit)
+        }
+        else if (id == R.id.nav_intro)
+        {
+            final Intent i = new Intent(MainActivity.this, IntroActivity.class);
+            startActivity(i);
+        }
+        else if (id == R.id.nav_credit)
         {
             onCreditFragmentInteraction(0);
         }
@@ -619,10 +627,10 @@ public class MainActivity
             String  Date = sessionK.getString("date");
 
             Log.i(TAG, "initListAll: "+Date);
-            Log.i(TAG, "initListAll: "+AbdosValue);
-            Log.i(TAG, "initListAll: "+DoresauxValue);
-            Log.i(TAG, "initListAll: "+CordeValue);
-            Log.i(TAG, "initListAll: "+SquatsValue);
+            //Log.i(TAG, "initListAll abdo: "+AbdosValue);
+            Log.i(TAG, "initListAll dorsaux: "+DoresauxValue);
+            //Log.i(TAG, "initListAll corde: "+CordeValue);
+            //Log.i(TAG, "initListAll squat: "+SquatsValue);
 
             String[] DateS = Date.split("-");
             Integer Year = Integer.parseInt(DateS[0]);

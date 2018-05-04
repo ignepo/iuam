@@ -11,6 +11,10 @@
             android:icon="@mipmap/ic_profile"
             android:title="@string/DrawerProfile" />
         <item
+            android:id="@+id/nav_intro"
+            android:icon="@mipmap/ic_intro"
+            android:title="@string/DrawerIntro" />
+        <item
             android:id="@+id/nav_credit"
             android:icon="@mipmap/ic_credit"
             android:title="@string/DrawerCredit" />

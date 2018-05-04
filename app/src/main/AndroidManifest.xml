@@ -29,6 +29,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".EmailPasswordActivity" />
         </activity>
+        <activity android:name=".IntroActivity"
+            android:label="IntroActivity" />
     </application>
 
 </manifest>
