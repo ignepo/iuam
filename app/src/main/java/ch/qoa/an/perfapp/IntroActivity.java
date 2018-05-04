@@ -41,7 +41,8 @@ public class IntroActivity extends AppIntro{
 
         // OPTIONAL METHODS
         // Override bar/separator color.
-        setBarColor(Color.parseColor("#3F51B5"));
+        //setBarColor(Color.parseColor("#3F51B5"));
+        setBarColor(Color.parseColor("#212121"));
         setSeparatorColor(Color.parseColor("#2196F3"));
 
         // Hide Skip/Done button.
@@ -62,13 +63,13 @@ public class IntroActivity extends AppIntro{
     }
 
 
-    public void loadMainActivity() {
+    /*public void loadMainActivity() {
         //  Launch app intro
         final Intent i = new Intent(IntroActivity.this, EmailPasswordActivity.class);
         //Intent intent = new Intent(this, MainActivity.class);
         startActivity(i);
         finish();
-    }
+    }*/
 
 
     @Override

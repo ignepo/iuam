@@ -50,7 +50,7 @@ public class MainActivity
     GlobalFragment globalFragment;
     ProfileFragment profileFragment;
     CreditFragment creditFragment;
-    public static boolean logged = false;
+    //public static boolean logged = false;
     String TAG = "TestApp1";
 
     BroadcastReceiver mybroadcast = new InternetConnector_Receiver();

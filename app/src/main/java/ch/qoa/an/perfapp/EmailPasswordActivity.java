@@ -49,6 +49,9 @@ public class EmailPasswordActivity extends BaseActivity implements
     public static Intent intentLogin;
     public static Intent intentAct;
 
+    public static boolean logged = false;
+    boolean logged_failed = false;
+
     // [START declare_auth]
     private FirebaseAuth mAuth;
     // [END declare_auth]
@@ -98,8 +101,6 @@ public class EmailPasswordActivity extends BaseActivity implements
         t.start();
         //************************************************************************************
 
-
-
         // Views
         mStatusTextView = findViewById(R.id.status);
         mDetailTextView = findViewById(R.id.detail);
@@ -131,6 +132,10 @@ public class EmailPasswordActivity extends BaseActivity implements
 
         // Is the user already connected
         if (mAuth.getCurrentUser() != null) {
+            //this.finish(); //ESSAI
+            //startActivity(EmailPasswordActivity.intentAct);
+            //ESSAI
+
             startActivity(new Intent(EmailPasswordActivity.this, MainActivity.class));
             finish();
         }
@@ -197,6 +202,7 @@ public class EmailPasswordActivity extends BaseActivity implements
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            logged = true;
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -204,6 +210,7 @@ public class EmailPasswordActivity extends BaseActivity implements
                             Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
+                            logged_failed=true;
                         }
 
                         // [START_EXCLUDE]
@@ -217,9 +224,14 @@ public class EmailPasswordActivity extends BaseActivity implements
         // [END sign_in_with_email]
 
         // Login effectué, démarrage des fonctions de sports
-        MainActivity.logged = true;
-        this.finish(); //ESSAI
-        startActivity(EmailPasswordActivity.intentAct);
+        //logged = true;
+        /*if(logged_failed=true) {
+        startActivity(new Intent(EmailPasswordActivity.this, MainActivity.class));
+        finish();
+            //this.finish(); //ESSAI
+            //startActivity(EmailPasswordActivity.intentAct);
+        }*/
+
     }
 
     public void getSignOut() {
@@ -234,7 +246,7 @@ public class EmailPasswordActivity extends BaseActivity implements
             MainActivity.fm.popBackStack();
         }*/
 
-        MainActivity.logged = false;
+        logged = false;
         mAuth.signOut();
         updateUI(null);
 
@@ -300,7 +312,11 @@ public class EmailPasswordActivity extends BaseActivity implements
     private void updateUI(FirebaseUser user) {
         hideProgressDialog();
         if (user != null) {
-            mStatusTextView.setText(getString(R.string.emailpassword_status_fmt,
+            startActivity(new Intent(EmailPasswordActivity.this, MainActivity.class));
+            finish();
+            Log.i(TAG, "updateUI: ****************************************************************");
+
+            /*mStatusTextView.setText(getString(R.string.emailpassword_status_fmt,
                     user.getEmail(), user.isEmailVerified()));
             mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
 
@@ -308,7 +324,7 @@ public class EmailPasswordActivity extends BaseActivity implements
             findViewById(R.id.email_password_fields).setVisibility(View.GONE);
             findViewById(R.id.signed_in_buttons).setVisibility(View.VISIBLE);
 
-            findViewById(R.id.verify_email_button).setEnabled(!user.isEmailVerified());
+            findViewById(R.id.verify_email_button).setEnabled(!user.isEmailVerified());*/
         } else {
             mStatusTextView.setText(R.string.signed_out);
             mDetailTextView.setText(null);
