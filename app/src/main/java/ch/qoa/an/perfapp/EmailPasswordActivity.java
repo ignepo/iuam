@@ -79,6 +79,10 @@ public class EmailPasswordActivity extends BaseActivity implements
                     //  Launch app intro
                     final Intent i = new Intent(EmailPasswordActivity.this, IntroActivity.class);
 
+                    //ESSAI
+                    mAuth.signOut();
+                    updateUI(null);
+
                     runOnUiThread(new Runnable() {
                         @Override public void run() {
                             startActivity(i);
@@ -93,6 +97,17 @@ public class EmailPasswordActivity extends BaseActivity implements
 
                     //  Apply changes
                     e.apply();
+                }
+                else{
+                    // Is the user already connected
+                    if (mAuth.getCurrentUser() != null) {
+                        //this.finish(); //ESSAI
+                        //startActivity(EmailPasswordActivity.intentAct);
+                        //ESSAI
+
+                        startActivity(new Intent(EmailPasswordActivity.this, MainActivity.class));
+                        finish();
+                    }
                 }
             }
         });
@@ -113,12 +128,6 @@ public class EmailPasswordActivity extends BaseActivity implements
         findViewById(R.id.sign_out_button).setOnClickListener(this);
         findViewById(R.id.verify_email_button).setOnClickListener(this);
 
-        //ESSAI
-        /*MainActivity.fm = getSupportFragmentManager(); // or 'getSupportFragmentManager();'
-        int count = MainActivity.fm.getBackStackEntryCount();
-        for(int i = 0; i < count; ++i) {
-            MainActivity.fm.popBackStack();
-        }*/
 
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
@@ -131,14 +140,14 @@ public class EmailPasswordActivity extends BaseActivity implements
         intentLogin = new Intent(this, EmailPasswordActivity.class);
 
         // Is the user already connected
-        if (mAuth.getCurrentUser() != null) {
+       /* if (mAuth.getCurrentUser() != null) {
             //this.finish(); //ESSAI
             //startActivity(EmailPasswordActivity.intentAct);
             //ESSAI
 
             startActivity(new Intent(EmailPasswordActivity.this, MainActivity.class));
             finish();
-        }
+        }*/
     }
 
     // [START on_start_check_user]
@@ -146,8 +155,9 @@ public class EmailPasswordActivity extends BaseActivity implements
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+        //FirebaseUser currentUser = mAuth.getCurrentUser();
+        //updateUI(currentUser);
+        updateUI(null);
     }
     // [END on_start_check_user]
 
@@ -239,13 +249,6 @@ public class EmailPasswordActivity extends BaseActivity implements
     }
 
     private void signOut() {
-
-        /*MainActivity.fm = getSupportFragmentManager(); // or 'getSupportFragmentManager();'
-        int count = MainActivity.fm.getBackStackEntryCount();
-        for(int i = 0; i < count; ++i) {
-            MainActivity.fm.popBackStack();
-        }*/
-
         logged = false;
         mAuth.signOut();
         updateUI(null);
