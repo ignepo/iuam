@@ -33,21 +33,57 @@ public class IntroActivity extends AppIntro{
 
         // Instead of fragments, you can also use our default slide
         // Just set a title, description, background and image. AppIntro will do the rest.
-        addSlide(AppIntroFragment.newInstance("First Page", "This page show you a recapitualtion in percent of your activity",
-                R.drawable.abdos, getResources().getColor(R.color.colorAccent1)));
+        addSlide(AppIntroFragment.newInstance("WELCOME !",
+                "This application will help you to visualize your sport session",
+                R.drawable.intro, Color.parseColor("#212121")));
 
-        addSlide(AppIntroFragment.newInstance("Sport Page", "Description of a secific sport",
-                R.drawable.dorsaux, getResources().getColor(R.color.colorAccent1)));
+        addSlide(AppIntroFragment.newInstance("Visualization choice",
+                "You can choice if you want to visualize your data in duration or repetitions. If you choice time, " +
+                        "the information is printed according to the time you past on one exercice, and if you choice repetition " +
+                        "the printed information will be the number or repetition of each exercice",
+                R.drawable.choice, Color.parseColor("#212121")));
+
+        addSlide(AppIntroFragment.newInstance("All Sport visualisation",
+                "blablabal",
+                R.drawable.all, Color.parseColor("#212121")));
+
+
+        addSlide(AppIntroFragment.newInstance("One sport visualisation",
+                "bloblo",
+                R.drawable.one, Color.parseColor("#212121")));
+
+        addSlide(AppIntroFragment.newInstance("ENJOY !",
+                "Let's go and made your life better with this application",
+                R.drawable.force, Color.parseColor("#212121")));
+
+
+        /*addSlide(AppIntroFragment.newInstance("Visualization choice",
+                "You can choice if you want to visualize your data in duration or repetition",
+                R.drawable.choice, getResources().getColor(R.color.colorAccent1)));*/
 
         // OPTIONAL METHODS
         // Override bar/separator color.
         //setBarColor(Color.parseColor("#3F51B5"));
         setBarColor(Color.parseColor("#212121"));
-        setSeparatorColor(Color.parseColor("#2196F3"));
+        //setSeparatorColor(Color.parseColor("#2196F3"));
+        setSeparatorColor(getResources().getColor(R.color.colorAccent1));
 
         // Hide Skip/Done button.
         showSkipButton(true);
+        setColorSkipButton(getResources().getColor(R.color.colorAccent1));
+        setColorDoneText(getResources().getColor(R.color.colorAccent1));
+        //setColorTransitionsEnabled(true);
+        setNextArrowColor(getResources().getColor(R.color.colorAccent1));
+        setIndicatorColor(getResources().getColor(R.color.colorAccent1),Color.parseColor("#FFFFFF"));
         setProgressButtonEnabled(true);
+
+        // Animations -- use only one of the below. Using both could cause errors.
+        //setFadeAnimation(); // OR
+        setZoomAnimation(); // OR
+        //setFlowAnimation(); // OR
+        //setSlideOverAnimation(); // OR
+        //setDepthAnimation(); // OR
+        //setCustomTransformer(yourCustomTransformer);
 
         // Turn vibration on and set intensity.
         // NOTE: you will probably need to ask VIBRATE permission in Manifest.
