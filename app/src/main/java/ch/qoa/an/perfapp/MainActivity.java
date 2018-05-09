@@ -69,7 +69,7 @@ public class MainActivity
     public static String SquatsNum;
     public static String CordesNum;
 
-    public static boolean Time_nRep=true;
+    public static boolean Time_nRep=false;
 
     private NavigationView navigationView;
 
@@ -134,6 +134,13 @@ public class MainActivity
     }
 
 
+    /*@Override
+    public void onPause()
+    {
+        super.onPause();
+        unregisterReceiver(mybroadcast);
+    }*/
+
 
     //---------------------------------------------------------------------------------
     // Check de la connection internet
@@ -142,6 +149,8 @@ public class MainActivity
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+
+        Log.i(TAG, "isNetworkAvailable#############################: " + activeNetworkInfo);
 
         return activeNetworkInfo != null;
 
@@ -210,11 +219,15 @@ public class MainActivity
         }
         else if (uri == 100)
         {
-            processGETRequest_TimeHist();
+            if(!noInternet) {
+                processGETRequest_TimeHist();
+            }
         }
         else if(uri == 101)
         {
-            processGETRequest_RepHist();
+            if(!noInternet) {
+                processGETRequest_RepHist();
+            }
         }
         else
         {
@@ -262,30 +275,37 @@ public class MainActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        if (!noInternet)
+        {
+            if (id == R.id.nav_home) {
+                callFragment(globalFragment, getString(R.string.PerfApp));
+                //onDrawerFragmentInteraction(mapFragment, getString(R.string.toolbarTitleMap));
+            } else if (id == R.id.nav_profile) {
+                onProfileFragmentInteraction(0);
+                //onDrawerFragmentInteraction(listFragment, getString(R.string.toolbarTitleList));
+            }
+            else if (id == R.id.nav_intro)
+            {
+                final Intent i = new Intent(MainActivity.this, IntroActivity.class);
+                startActivity(i);
+            }
+            else if (id == R.id.nav_credit)
+            {
+                onCreditFragmentInteraction(0);
+            }
+            else if (id == R.id.nav_loout)
+            {
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                mAuth.signOut();
+                this.finish();
+                startActivity(EmailPasswordActivity.intentLogin);
+            }
+        }
+        else
+        {
+            Toast.makeText(getApplicationContext(), "Activate Internet to enter that menu", Toast.LENGTH_LONG).show();
+        }
 
-        if (id == R.id.nav_home) {
-            callFragment(globalFragment, getString(R.string.PerfApp));
-            //onDrawerFragmentInteraction(mapFragment, getString(R.string.toolbarTitleMap));
-        } else if (id == R.id.nav_profile) {
-            onProfileFragmentInteraction(0);
-            //onDrawerFragmentInteraction(listFragment, getString(R.string.toolbarTitleList));
-        }
-        else if (id == R.id.nav_intro)
-        {
-            final Intent i = new Intent(MainActivity.this, IntroActivity.class);
-            startActivity(i);
-        }
-        else if (id == R.id.nav_credit)
-        {
-            onCreditFragmentInteraction(0);
-        }
-        else if (id == R.id.nav_loout)
-        {
-            FirebaseAuth mAuth = FirebaseAuth.getInstance();
-            mAuth.signOut();
-            this.finish();
-            startActivity(EmailPasswordActivity.intentLogin);
-        }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -496,6 +516,7 @@ public class MainActivity
         try {
 
             Integer  Value = Integer.parseInt(sessionK.getString("value"));
+            Integer ValueTime = Integer.parseInt(sessionK.getString("value_time"));
             String  Date = sessionK.getString("date");
             String[] DateS = Date.split("-");
             Integer Year = Integer.parseInt(DateS[0]);
@@ -505,6 +526,7 @@ public class MainActivity
             SportItem abdoSession = new SportItem();
 
             abdoSession.setRep(Value);
+            abdoSession.setTime(ValueTime);
             abdoSession.setYear(Year);
             abdoSession.setMonth(Month);
             abdoSession.setDay(Day);
@@ -524,6 +546,7 @@ public class MainActivity
         try {
 
             Integer  Value = Integer.parseInt(sessionK.getString("value"));
+            Integer ValueTime = Integer.parseInt(sessionK.getString("value_time"));
             String  Date = sessionK.getString("date");
             String[] DateS = Date.split("-");
             Integer Year = Integer.parseInt(DateS[0]);
@@ -533,6 +556,7 @@ public class MainActivity
             SportItem CordeSession = new SportItem();
 
             CordeSession.setRep(Value);
+            CordeSession.setTime(ValueTime);
             CordeSession.setYear(Year);
             CordeSession.setMonth(Month);
             CordeSession.setDay(Day);
@@ -552,6 +576,7 @@ public class MainActivity
         try {
 
             Integer  Value = Integer.parseInt(sessionK.getString("value"));
+            Integer ValueTime = Integer.parseInt(sessionK.getString("value_time"));
             String  Date = sessionK.getString("date");
             String[] DateS = Date.split("-");
             Integer Year = Integer.parseInt(DateS[0]);
@@ -561,6 +586,7 @@ public class MainActivity
             SportItem SquatSession = new SportItem();
 
             SquatSession.setRep(Value);
+            SquatSession.setTime(ValueTime);
             SquatSession.setYear(Year);
             SquatSession.setMonth(Month);
             SquatSession.setDay(Day);
@@ -580,6 +606,7 @@ public class MainActivity
         try {
 
             Integer  Value = Integer.parseInt(sessionK.getString("value"));
+            Integer ValueTime = Integer.parseInt(sessionK.getString("value_time"));
             String  Date = sessionK.getString("date");
             String[] DateS = Date.split("-");
             Integer Year = Integer.parseInt(DateS[0]);
@@ -595,6 +622,7 @@ public class MainActivity
             SportItem DorsauxSession = new SportItem();
 
             DorsauxSession.setRep(Value);
+            DorsauxSession.setTime(ValueTime);
             DorsauxSession.setYear(Year);
             DorsauxSession.setMonth(Month);
             DorsauxSession.setDay(Day);
@@ -681,11 +709,21 @@ public class MainActivity
                         snackbar.show();
                     }
                     noInternet=false;
-                    processGETRequest_TimeHist(); //ESSAI
+                    if(Time_nRep)
+                    {
+                        processGETRequest_TimeHist(); //ESSAI
+                    }
+                    else
+                    {
+                        processGETRequest_RepHist(); //ESSAI
+                    }
+
+                    Log.i(TAG, "onReceive: ****************************************internet OK");
                 } else {
                     snackbar.setDuration(Snackbar.LENGTH_INDEFINITE);
                     snackbar.show();
                     noInternet = true;
+                    Log.i(TAG, "onReceive: ****************************************internet KO");
                 }
 
             } catch (Exception e) {

@@ -137,7 +137,15 @@ public class AbdoTimeFragment extends Fragment {
         for (SportItem session: SessionList) {
             date[i] = new Date(session.getYear(), session.getMonth(), session.getDay());
             Log.i(TAG, "onCreateView********************************: "+date[i]);
-            values[i] = new DataPoint(date[i], session.getRep());
+            if(MainActivity.Time_nRep)
+            {
+                values[i] = new DataPoint(date[i], session.getTime());
+            }
+            else
+            {
+                values[i] = new DataPoint(date[i], session.getRep());
+            }
+
 
             if(i==0)
             {
@@ -245,7 +253,7 @@ public class AbdoTimeFragment extends Fragment {
 
         graph.getViewport().setYAxisBoundsManual(true);
         graph.getViewport().setMinY(0);
-        graph.getViewport().setMaxY(Ymax+10);
+        graph.getViewport().setMaxY(series.getHighestValueY()+10);
 
         graph.getViewport().setScalable(true);
         graph.getViewport().setScrollable(true);

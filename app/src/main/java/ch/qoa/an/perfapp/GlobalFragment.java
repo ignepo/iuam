@@ -131,7 +131,7 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
 
         if(first)
         {
-            buttonTime.setChecked(true);
+            buttonRep.setChecked(true);
             first=false;
         }
 
