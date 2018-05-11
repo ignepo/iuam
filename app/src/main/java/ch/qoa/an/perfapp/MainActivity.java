@@ -36,13 +36,13 @@ public class MainActivity
         extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         RecapFragment.OnFragmentInteractionListener,
-        AbdoTimeFragment.OnFragmentInteractionListener,
+        SportFragment.OnFragmentInteractionListener,
         GlobalFragment.OnFragmentInteractionListener,
         ProfileFragment.OnFragmentInteractionListener,
         CreditFragment.OnFragmentInteractionListener{
 
     RecapFragment recapFragment;
-    AbdoTimeFragment abdotimeFragment;
+    SportFragment abdotimeFragment;
     GlobalFragment globalFragment;
     ProfileFragment profileFragment;
     CreditFragment creditFragment;
@@ -75,14 +75,12 @@ public class MainActivity
         setContentView(R.layout.activity_main);
 
         recapFragment = new RecapFragment();
-        abdotimeFragment = new AbdoTimeFragment();
+        abdotimeFragment = new SportFragment();
         globalFragment = new GlobalFragment();
         profileFragment = new ProfileFragment();
         creditFragment = new CreditFragment();
 
         processGETRequest_TimeHist();
-
-
 
         AbdoSessionList = new ArrayList<>();
         DorsauxSessionList = new ArrayList<>();
@@ -129,15 +127,6 @@ public class MainActivity
 
     }
 
-
-    /*@Override
-    public void onPause()
-    {
-        super.onPause();
-        unregisterReceiver(mybroadcast);
-    }*/
-
-
     //---------------------------------------------------------------------------------
     // Check de la connection internet
     //---------------------------------------------------------------------------------
@@ -153,27 +142,15 @@ public class MainActivity
     }
 
     private void callFragment(Fragment fragmentToCall, String title) {
-        //if(logged) {
-
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            //setTitle(title);
-            transaction.replace(R.id.fragment_container, fragmentToCall);
-            transaction.addToBackStack(null);
-
-            transaction.commit();
-        /*} else {
-
-            this.finish(); //ESSAI
-            startActivity(EmailPasswordActivity.intentLogin);
-
-        }*/
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragmentToCall);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     @Override
     public void onProfileFragmentInteraction(Integer uri) {
         callFragment(profileFragment, getString(R.string.TitleProfile));
-        //detailFragment.updateElement(itemAtPosition);
-        //callFragment(detailFragment, getString(R.string.toolbarTitleDetail));
     }
 
     @Override
@@ -184,25 +161,11 @@ public class MainActivity
     @Override
     public void onRecapFragmentInteraction(Integer uri) {
         callFragment(globalFragment, getString(R.string.PerfApp));
-        //detailFragment.updateElement(itemAtPosition);
-        //callFragment(detailFragment, getString(R.string.toolbarTitleDetail));
     }
 
     @Override
     public void onAbdoTimeFragmentInteraction(Integer uri) {
-        //Si on a pressé logout
-        if(uri == 999)
-        {
-            FirebaseAuth mAuth = FirebaseAuth.getInstance();
-            mAuth.signOut();
-            this.finish();
-            startActivity(EmailPasswordActivity.intentLogin);
-        }
-        else {
-            callFragment(recapFragment, getString(R.string.TitleHist));
-        }
-        //detailFragment.updateElement(itemAtPosition);
-        //callFragment(detailFragment, getString(R.string.toolbarTitleDetail));
+        callFragment(recapFragment, getString(R.string.TitleHist));
     }
 
     @Override
@@ -211,7 +174,6 @@ public class MainActivity
         {
             recapFragment.setSessionHistList(AllSessionList);
             processGETRequest_Hist("/days/1");
-            //callFragment(recapFragment, "Recap");
         }
         else if (uri == 100)
         {

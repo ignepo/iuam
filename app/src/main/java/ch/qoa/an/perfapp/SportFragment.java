@@ -25,10 +25,10 @@ import java.util.Date;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link AbdoTimeFragment.OnFragmentInteractionListener} interface
+ * {@link SportFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  */
-public class AbdoTimeFragment extends Fragment {
+public class SportFragment extends Fragment {
     View myView;
     private Button goRecap;
     private ImageView sportImage;
@@ -58,7 +58,7 @@ public class AbdoTimeFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public AbdoTimeFragment() {
+    public SportFragment() {
         // Required empty public constructor
     }
 
@@ -132,6 +132,7 @@ public class AbdoTimeFragment extends Fragment {
         // set date label formatter
         graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
         //graph.getGridLabelRenderer().setNumHorizontalLabels(10); // only 4 because of the space
+        //graph.getGridLabelRenderer().setNumVerticalLabels(10); // only 4 because of the space
         //graph.getGridLabelRenderer().setLabelHorizontalHeight(20);
         graph.getGridLabelRenderer().setTextSize(25); //25
         graph.getGridLabelRenderer().setHorizontalLabelsAngle(90);
@@ -200,10 +201,10 @@ public class AbdoTimeFragment extends Fragment {
 
         series.setSpacing(10); //10
         // draw values on top
-        series.setDrawValuesOnTop(false);
+        series.setDrawValuesOnTop(true);
         //series.setAnimated(true);
-        //series.setValuesOnTopColor(Color.RED);
-        //series.setValuesOnTopSize(50);
+        series.setValuesOnTopColor(Color.DKGRAY);
+        series.setValuesOnTopSize(20);
 
         return myView;
     }

@@ -28,8 +28,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import static com.android.volley.VolleyLog.TAG;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -82,9 +80,9 @@ public class RecapFragment extends Fragment implements OnChartValueSelectedListe
 
         mChart.getDescription().setEnabled(false);
 
-        // if more than 40 entries are displayed in the chart, no values will be
+        // if more than 15 entries are displayed in the chart, no values will be
         // drawn
-        mChart.setMaxVisibleValueCount(40);
+        mChart.setMaxVisibleValueCount(15);
 
         // scaling can now only be done on x- and y-axis separately
         mChart.setPinchZoom(false);

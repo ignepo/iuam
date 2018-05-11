@@ -9,9 +9,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
 class Utils {
 
     private static final String TAG = "testBiloc";

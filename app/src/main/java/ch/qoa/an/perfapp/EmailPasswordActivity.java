@@ -16,13 +16,11 @@
 
 package ch.qoa.an.perfapp;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -101,10 +99,6 @@ public class EmailPasswordActivity extends BaseActivity implements
                 else{
                     // Is the user already connected
                     if (mAuth.getCurrentUser() != null) {
-                        //this.finish(); //ESSAI
-                        //startActivity(EmailPasswordActivity.intentAct);
-                        //ESSAI
-
                         startActivity(new Intent(EmailPasswordActivity.this, MainActivity.class));
                         finish();
                     }
@@ -138,16 +132,6 @@ public class EmailPasswordActivity extends BaseActivity implements
         intentAct = new Intent(this, MainActivity.class);
         // Démarrage de l'activité de login
         intentLogin = new Intent(this, EmailPasswordActivity.class);
-
-        // Is the user already connected
-       /* if (mAuth.getCurrentUser() != null) {
-            //this.finish(); //ESSAI
-            //startActivity(EmailPasswordActivity.intentAct);
-            //ESSAI
-
-            startActivity(new Intent(EmailPasswordActivity.this, MainActivity.class));
-            finish();
-        }*/
     }
 
     // [START on_start_check_user]
