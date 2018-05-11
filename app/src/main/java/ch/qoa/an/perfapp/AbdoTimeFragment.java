@@ -27,8 +27,6 @@ import java.util.Date;
  * Activities that contain this fragment must implement the
  * {@link AbdoTimeFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the  factory method to
- * create an instance of this fragment.
  */
 public class AbdoTimeFragment extends Fragment {
     View myView;

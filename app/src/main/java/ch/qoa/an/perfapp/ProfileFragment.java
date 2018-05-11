@@ -41,13 +41,6 @@ public class ProfileFragment extends Fragment {
         //user = MainActivity.getCurrentUser();
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onProfileFragmentInteraction(0);
-        }
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

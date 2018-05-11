@@ -39,31 +39,11 @@ import static android.content.ContentValues.TAG;
  * Activities that contain this fragment must implement the
  * {@link GlobalFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link GlobalFragment#newInstance} factory method to
- * create an instance of this fragment.
  */
 //implements OnStreetViewPanoramaReadyCallback
 public class GlobalFragment extends Fragment implements OnChartValueSelectedListener{
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
     String TAG = "TestApp";
-
-    //70r0-0kLNDWmRIOukJSNBrTPRlP
-    /*public static final int[] COLORS_PERFAPP = {
-            Color.rgb(159, 89, 198),
-            Color.rgb(230, 96, 152),
-            Color.rgb(255, 255, 107),
-            Color.rgb(179, 240, 100)
-    };*/
-    /*public static final int[] COLORS_PERFAPP = {
-            Color.rgb(242, 254, 113),
-            Color.rgb(0, 151, 167),
-            Color.rgb(0, 188, 212),
-            Color.rgb(0, 0, 0)
-    };*/
 
     public static final int[] COLORS_PERFAPP = {
             Color.rgb(241, 3, 138), //#f1038a abdo
@@ -72,12 +52,7 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
             Color.rgb(7, 200, 227)//#07C8E3 squats
     };
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     View myView;
-    //private Button buttonRep;
-    //private Button buttonTime;
     private RadioButton buttonRep;
     private RadioButton buttonTime;
     private boolean first = true;
@@ -91,31 +66,9 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment GlobalFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static GlobalFragment newInstance(String param1, String param2) {
-        GlobalFragment fragment = new GlobalFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -235,13 +188,6 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
     @Override
     public void onNothingSelected() {
 
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Integer uri) {
-        if (mListener != null) {
-            mListener.onGlobalFragmentInteraction(uri);
-        }
     }
 
     @Override
