@@ -135,19 +135,6 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
             first=false;
         }
 
-        /*if(buttonRep.isChecked())
-        {
-            Log.i(TAG, "onCreateView: RADIO BUTTON REP");
-            MainActivity.Time_nRep=false;
-            mListener.onGlobalFragmentInteraction(101);
-        }
-        else
-        {
-            Log.i(TAG, "onCreateView: RADIO BUTTON REP");
-            MainActivity.Time_nRep=true;
-            mListener.onGlobalFragmentInteraction(100);
-        }*/
-
         buttonRep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -167,51 +154,6 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
                 }
             }
         });
-        //-----------------------------------------------------------------------------------
-        // Ajout listener
-        //-----------------------------------------------------------------------------------
-        /*buttonRep = myView.findViewById(R.id.buttonRep);
-        buttonRep.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(mListener != null){
-                    MainActivity.Time_nRep=false;
-                    //buttonRep.setBackgroundTintList(getResources().getColorStateList((R.color.colorAccent)));
-
-                    //buttonTime.setBackgroundTintList(getResources().getColorStateList((R.color.grey_300)));
-
-                    mListener.onGlobalFragmentInteraction(101);
-                }
-            }
-        });*/
-
-        /*buttonTime = myView.findViewById(R.id.buttonTime);
-        buttonTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(mListener != null){
-                    MainActivity.Time_nRep=true;
-                    //buttonTime.setBackgroundTintList(getResources().getColorStateList(R.color.colorAccent));
-
-                    //buttonRep.setBackgroundTintList(getResources().getColorStateList(R.color.grey_300));
-                    mListener.onGlobalFragmentInteraction(100);
-                }
-            }
-        });*/
-
-        if(MainActivity.Time_nRep)
-        {
-            //buttonTime.setBackgroundTintList(getResources().getColorStateList(R.color.colorAccent));
-
-            //buttonRep.setBackgroundTintList(getResources().getColorStateList(R.color.grey_300));
-        }
-        else
-        {
-            //buttonRep.setBackgroundTintList(getResources().getColorStateList((R.color.colorAccent)));
-
-            //buttonTime.setBackgroundTintList(getResources().getColorStateList((R.color.grey_300)));
-
-        }
 
         FloatingActionButton seeStationOnMap = myView.findViewById(R.id.mapButton);
         seeStationOnMap.setOnClickListener(new View.OnClickListener() {
@@ -288,29 +230,6 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
         Log.i(TAG, "onValueSelected e: *****************"+e);
         Log.i(TAG, "onValueSelected h: *****************"+h.getX());
         mListener.onGlobalFragmentInteraction((int)(h.getX()));
-        //text = myView.findViewById(R.id.sport);
-
-        /*switch((int)(h.getX())) {
-            case 0:
-                Log.i(TAG, "onValueSelected : Abdos");
-                text.setText("ABDOS");
-                break;
-            case 1:
-                Log.i(TAG, "onValueSelected : Dorseaux");
-                text.setText("DORSEAUX");
-                break;
-            case 2:
-                Log.i(TAG, "onValueSelected : Corde");
-                text.setText("CORDE");
-                break;
-            case 3:
-                Log.i(TAG, "onValueSelected : Squats");
-                text.setText("SQUATS");
-                break;
-            default:
-                Log.i(TAG, "onValueSelected : Other");
-        }*/
-
     }
 
     @Override

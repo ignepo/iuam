@@ -185,26 +185,6 @@ public class RecapFragment extends Fragment implements OnChartValueSelectedListe
                     new float[]{val1, val2, val3, val4})); //ESSAI
         }
 
-
-        /*for (int i = 0; i < 10; i++) {
-
-            //calendar.getTimeinMilis();
-            //int date = 731+i;
-            Date date = new Date(2018, 0, i+1); //faire month-1
-            //getDay(date)
-            //Date date = new Date(2018, 6, i+1);
-            Log.i(TAG, "onCreateView: "+getDay(date));
-            float mult = 50;
-            val1 = (float) (Math.random() * mult) + mult / 4;
-            val2 = (float) (Math.random() * mult) + mult / 4;
-            val3 = (float) (Math.random() * mult) + mult / 4;
-            val4 = (float) (Math.random() * mult) + mult / 4;
-
-            yVals1.add(new BarEntry(
-                    getDay(date)+731, //731=2018 // 367 = 2017 // 0=2016
-                    new float[]{val1, val2, val3, val4})); //ESSAI
-        }*/
-
         BarDataSet set1;
 
         if (mChart.getData() != null &&

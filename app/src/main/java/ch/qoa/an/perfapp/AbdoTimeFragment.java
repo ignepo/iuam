@@ -1,16 +1,11 @@
 package ch.qoa.an.perfapp;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,23 +13,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.utils.ColorTemplate;
-import com.google.firebase.auth.FirebaseAuth;
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.ArrayList;
 import java.util.Date;
-
-import static com.android.volley.VolleyLog.TAG;
 
 
 /**
@@ -42,18 +27,10 @@ import static com.android.volley.VolleyLog.TAG;
  * Activities that contain this fragment must implement the
  * {@link AbdoTimeFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link AbdoTimeFragment#newInstance} factory method to
+ * Use the  factory method to
  * create an instance of this fragment.
  */
 public class AbdoTimeFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     View myView;
     private Button goRecap;
     private ImageView sportImage;
@@ -87,31 +64,9 @@ public class AbdoTimeFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AbdoTimeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AbdoTimeFragment newInstance(String param1, String param2) {
-        AbdoTimeFragment fragment = new AbdoTimeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -172,57 +127,7 @@ public class AbdoTimeFragment extends Fragment {
             i++;
         }
 
-        /*switch(setSport) {
-            case 0:
-                Integer i=0;
-
-
-                for (SportItem session: SessionList) {
-                    date[i] = new Date(session.getYear(), session.getMonth(), session.getDay());
-                    values[i] = new DataPoint(date[i], session.getRep());
-                    i++;
-                }
-
-                break;
-            default:
-
-                date[0] = new Date(2018, 6, 2);
-                date[1] = new Date(2018, 6, 10);
-                date[2] = new Date(2018, 6, 11);
-                date[3] = new Date(2018, 6, 12);
-                date[4] = new Date(2018, 6, 15);
-                date[5] = new Date(2018, 6, 16);
-                date[6] = new Date(2018, 6, 20);
-                date[7] = new Date(2018, 6, 30);
-                date[8] = new Date(2018, 7, 2);
-                date[9] = new Date(2018, 7, 3);
-                date[10] = new Date(2018, 7, 12);
-                date[11] = new Date(2018, 7, 13);
-                date[12] = new Date(2018, 7, 14);
-
-                values[0] = new DataPoint(date[0], 3);
-                values[1] = new DataPoint(date[1], 10);
-                values[2] = new DataPoint(date[2], 23);
-                values[3] = new DataPoint(date[3], 43);
-                values[4] = new DataPoint(date[4], 10);
-                values[5] = new DataPoint(date[5], 23);
-                values[6] = new DataPoint(date[6], 43);
-                values[7] = new DataPoint(date[7], 10);
-                values[8] = new DataPoint(date[8], 23);
-                values[9] = new DataPoint(date[9], 4);
-                values[10] = new DataPoint(date[10], 25);
-                values[11] = new DataPoint(date[11], 54);
-                values[12] = new DataPoint(date[12], 34);
-
-                BarGraphSeries<DataPoint> series=new BarGraphSeries<>(values);
-
-                break;
-                //Do Something
-        }*/
-
         BarGraphSeries<DataPoint> series=new BarGraphSeries<>(values);
-        //series = new LineGraphSeries<DataPoint>(values);
-
 
         graph.addSeries(series);
 
@@ -303,13 +208,6 @@ public class AbdoTimeFragment extends Fragment {
         //series.setValuesOnTopSize(50);
 
         return myView;
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Integer uri) {
-        if (mListener != null) {
-            mListener.onAbdoTimeFragmentInteraction(uri);
-        }
     }
 
     @Override

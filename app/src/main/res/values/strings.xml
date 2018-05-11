@@ -118,4 +118,25 @@
     <string name="DrawerIntro">Help</string>
 
 
+    <string name="Title1">WELCOME !</string>
+    <string name="Body1">This application will help you to visualize your sport session</string>
+
+    <string name="Title2">Visualization choice</string>
+    <string name="Body2">You can choice if you want to visualize your data in duration or
+        repetitions. If you choice time, the information is printed according to the time
+        you past on one exercice, and if you choice repetition the printed information
+        will be the number of repetition of each exercice</string>
+
+    <string name="Title3">All Sport visualisation</string>
+    <string name="Body3">Visualization of all the session by pushing the center button</string>
+
+    <string name="Title4">One sport visualisation</string>
+    <string name="Body4">Visualization of all session for one sport by pushing the corresponding
+    sport</string>
+
+    <string name="Title5">ENJOY !</string>
+    <string name="Body5">Let\'s go and made your life better with this application</string>
+
+
+
 </resources>

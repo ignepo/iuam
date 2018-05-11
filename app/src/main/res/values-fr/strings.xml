@@ -116,4 +116,26 @@
     <string name="Credit">Cette application sportive (PerfApp) a été dévelopée par :</string>
     <string name="TitleCredit">Credit</string>
     <string name="DrawerIntro">Aide</string>
+
+    <string name="Title1">BIENVENUE !</string>
+    <string name="Body1">Cette application vous aide à visualiser vos sessions de sport</string>
+
+    <string name="Title2">Choix de visualisation</string>
+    <string name="Body2">Choix de la visulatisation des données entre temps et répétitions.
+    Si le choix est fait pour temps tous les graphiques seront affichés en fonction du temps passé
+    sur un exercice. Et si répétition est choisi, les graphiques indiqueront le nombre de répétitions
+    de chaque exercice</string>
+
+    <string name="Title3">Vue de tous les sports</string>
+    <string name="Body3">Visualisation de toutes les sessions en incluant tous les sports en
+    appuyant sur le bouton du centre.</string>
+
+    <string name="Title4">Vue d\'un sport</string>
+    <string name="Body4">Visualitation de toutes les sessions pour un seul sport en appuyant
+    sur le sport désiré.</string>
+
+    <string name="Title5">ENJOY !</string>
+    <string name="Body5">C\'est parti, rends ta vie meilleure avec cette application!</string>
+
+
 </resources>
