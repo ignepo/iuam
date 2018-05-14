@@ -46,8 +46,6 @@ public class MainActivity
     GlobalFragment globalFragment;
     ProfileFragment profileFragment;
     CreditFragment creditFragment;
-    //public static boolean logged = false;
-    String TAG = "TestApp1";
 
     BroadcastReceiver mybroadcast = new InternetConnector_Receiver();
     private static boolean noInternet=false;
@@ -88,10 +86,9 @@ public class MainActivity
         SquatsSessionList = new ArrayList<>();
         AllSessionList = new ArrayList<>();
 
-                FragmentTransaction fragmentTransaction =
+        FragmentTransaction fragmentTransaction =
                 getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.fragment_container, globalFragment);
-        /*fragmentTransaction.commit();*/
 
         //-----------------------------------------------------------------------------------
         // Toolbar / drawer
@@ -109,15 +106,15 @@ public class MainActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //---------------------------------------------------------------------------------
-        // Création de la snackbar qui sera utilisée pour informer l'utilisateur qu'il
-        // n'y a pas de connexion internet.
+        // Creation of a snackbar ton indicate to the user tha the connexion to internet
+        // is not available
         //---------------------------------------------------------------------------------
         snackbar = Snackbar.make(findViewById(R.id.fragment_container), getString(R.string.NoInternet), Snackbar.LENGTH_INDEFINITE);
         View sbView = snackbar.getView();
         sbView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorAccent));
 
         //---------------------------------------------------------------------------------
-        // Détection de la connexion internet à travers un broadcast
+        // Detection of Internet connection with a broadcast
         //---------------------------------------------------------------------------------
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
@@ -128,7 +125,7 @@ public class MainActivity
     }
 
     //---------------------------------------------------------------------------------
-    // Check de la connection internet
+    // Check Internet connection
     //---------------------------------------------------------------------------------
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
@@ -168,18 +165,18 @@ public class MainActivity
 
     @Override
     public void onGlobalFragmentInteraction(Integer uri) {
-        if(uri == 800)
+        if(uri == 800) //Call if center button is pressed
         {
             recapFragment.setSessionHistList(AllSessionList);
             processGETRequest_Hist("/days/1");
         }
-        else if (uri == 100)
+        else if (uri == 100) //Call if time is pressed
         {
             if(!noInternet) {
                 processGETRequest_TimeHist();
             }
         }
-        else if(uri == 101)
+        else if(uri == 101) //Call if rep is pressed
         {
             if(!noInternet) {
                 processGETRequest_RepHist();
@@ -189,6 +186,7 @@ public class MainActivity
         {
             abdotimeFragment.setSport(uri);
 
+            //Check which sport is selected
             switch(uri) {
                 case 0:
                     abdotimeFragment.setSessionList(AbdoSessionList);
@@ -235,10 +233,8 @@ public class MainActivity
         {
             if (id == R.id.nav_home) {
                 callFragment(globalFragment, getString(R.string.PerfApp));
-                //onDrawerFragmentInteraction(mapFragment, getString(R.string.toolbarTitleMap));
             } else if (id == R.id.nav_profile) {
                 onProfileFragmentInteraction(0);
-                //onDrawerFragmentInteraction(listFragment, getString(R.string.toolbarTitleList));
             }
             else if (id == R.id.nav_intro)
             {
@@ -270,7 +266,8 @@ public class MainActivity
     }
 
     //---------------------------------------------------------------------------------
-    // Récupération et parsing du JSON des station preovenant du serveur
+    // Loading and parsing of the JSON for the data coming from the server
+    // Request for the PieChart Time History
     //---------------------------------------------------------------------------------
     private void processGETRequest_TimeHist() {
 
@@ -308,7 +305,8 @@ public class MainActivity
 
 
     //---------------------------------------------------------------------------------
-    // Récupération et parsing du JSON des station preovenant du serveur
+    // Loading and parsing of the JSON for the data coming from the server
+    // Request for the PieChart Repetition History
     //---------------------------------------------------------------------------------
     private void processGETRequest_RepHist() {
 
@@ -343,7 +341,8 @@ public class MainActivity
 
 
     //---------------------------------------------------------------------------------
-    // Récupération et parsing du JSON des station preovenant du serveur
+    // Loading and parsing of the JSON for the data coming from the server
+    // Request for the BarChar one of the fourth sport
     //---------------------------------------------------------------------------------
     private void processGETRequest_SportHist(String url) {
 
@@ -416,7 +415,8 @@ public class MainActivity
     }
 
     //---------------------------------------------------------------------------------
-    // Récupération et parsing du JSON des station preovenant du serveur
+    // Loading and parsing of the JSON for the data coming from the server
+    // Request for the multiple barChart History of all session
     //---------------------------------------------------------------------------------
     private void processGETRequest_Hist(String url) {
 
@@ -438,10 +438,6 @@ public class MainActivity
                                 initListAll(SessionK);
                             }
                             callFragment(recapFragment, "Recap");
-                            /*FragmentTransaction fragTransaction =  getSupportFragmentManager().beginTransaction();
-                            fragTransaction.detach(abdotimeFragment);
-                            fragTransaction.attach(abdotimeFragment);
-                            callFragment(abdotimeFragment, "AbdoTime");*/
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -451,7 +447,7 @@ public class MainActivity
     }
 
     //---------------------------------------------------------------------------------
-    // Initialisation de la liste
+    // List initialization for abdos session
     //---------------------------------------------------------------------------------
     private void initListAbdo(JSONObject sessionK) {
 
@@ -481,7 +477,7 @@ public class MainActivity
     }
 
     //---------------------------------------------------------------------------------
-    // Initialisation de la liste
+    // List initialization for corde session
     //---------------------------------------------------------------------------------
     private void initListCorde(JSONObject sessionK) {
 
@@ -511,7 +507,7 @@ public class MainActivity
     }
 
     //---------------------------------------------------------------------------------
-    // Initialisation de la liste
+    // List initialization for squats session
     //---------------------------------------------------------------------------------
     private void initListSquat(JSONObject sessionK) {
 
@@ -541,7 +537,7 @@ public class MainActivity
     }
 
     //---------------------------------------------------------------------------------
-    // Initialisation de la liste
+    // List initialization for dorsaux session
     //---------------------------------------------------------------------------------
     private void initListDorsaux(JSONObject sessionK) {
 
@@ -572,7 +568,7 @@ public class MainActivity
 
 
     //---------------------------------------------------------------------------------
-    // Initialisation de la liste
+    // List initialization for all session
     //---------------------------------------------------------------------------------
     private void initListAll(JSONObject sessionK) {
 
@@ -620,7 +616,7 @@ public class MainActivity
 
 
     //---------------------------------------------------------------------------------
-    // Boradcast qui check lorsqu'il y a un changement sur la connecitivé
+    // Boradcast to check something changing about the connexion
     //---------------------------------------------------------------------------------
     public class InternetConnector_Receiver extends BroadcastReceiver {
 

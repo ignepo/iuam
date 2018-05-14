@@ -4,12 +4,10 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,26 +28,11 @@ import java.util.Date;
  */
 public class SportFragment extends Fragment {
     View myView;
-    private Button goRecap;
     private ImageView sportImage;
-    private Button goLogin;
-    private TextView textSport;
-    //GraphView graph;
     GraphView bargraph;
     Integer setSport;
-    String TAG = "TestApp";
 
     public static ArrayList<SportItem> SessionList;
-
-    private float mScaleFactor = 1.f;
-
-
-    TextView textMsg;
-
-    private ScaleGestureDetector scaleGestureDetector;
-
-    //Date[] date = new Date[13];
-    //DataPoint[] values = new DataPoint[13];
 
     public static final int COLOR_ABDO = Color.rgb(241, 3, 138);
     public static final int COLOR_DORSEAU = Color.rgb(148, 16, 231);
@@ -83,10 +66,8 @@ public class SportFragment extends Fragment {
         DataPoint[] values = new DataPoint[SessionList.size()];
 
         Integer i=0;
-        long date_min=0;
-        long date_max=0;
-        Integer Ymax =0;
 
+        //Fill the data for the barChart with le SessionList
         for (SportItem session: SessionList) {
             date[i] = new Date(session.getYear(), session.getMonth(), session.getDay());
             if(MainActivity.Time_nRep)
@@ -98,29 +79,6 @@ public class SportFragment extends Fragment {
                 values[i] = new DataPoint(date[i], session.getRep());
             }
 
-
-            if(i==0)
-            {
-                Ymax=session.getRep();
-                date_min=date[i].getTime();
-                date_max=date[i].getTime();
-            }
-
-            if(session.getRep()>Ymax)
-            {
-                Ymax=session.getRep();
-            }
-
-            if(date[i].getTime()< date_min)
-            {
-                date_min = date[i].getTime();
-            }
-
-            if(date[i].getTime()> date_max)
-            {
-                date_max = date[i].getTime();
-            }
-
             i++;
         }
 
@@ -128,69 +86,65 @@ public class SportFragment extends Fragment {
 
         graph.addSeries(series);
 
-        // set date label formatter
+        // Set date label formatter
         graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
-        //graph.getGridLabelRenderer().setNumHorizontalLabels(10); // only 4 because of the space
-        //graph.getGridLabelRenderer().setNumVerticalLabels(10); // only 4 because of the space
-        //graph.getGridLabelRenderer().setLabelHorizontalHeight(20);
-        graph.getGridLabelRenderer().setTextSize(25); //25
+
+        //Set some parameters for the grid labels
+        graph.getGridLabelRenderer().setTextSize(25);
+        //graph.getGridLabelRenderer().setNumVerticalLabels(10); //ESSAI
         graph.getGridLabelRenderer().setHorizontalLabelsAngle(90);
         graph.getGridLabelRenderer().setLabelsSpace(10);
-        //graph.getGridLabelRenderer().setPadding(5); //10
 
+        //Change the vertical Axis Title in accordance to the printed session
+        //Minutes if the time are selected and Repetition if the rep option is selected
         if(MainActivity.Time_nRep)
         {
-            graph.getGridLabelRenderer().setVerticalAxisTitle(getString(R.string.ModeTime)); //ESSAI
+            graph.getGridLabelRenderer().setVerticalAxisTitle(getString(R.string.ModeTime));
         }
         else
         {
-            graph.getGridLabelRenderer().setVerticalAxisTitle(getString(R.string.ModeRep)); //ESSAI
+            graph.getGridLabelRenderer().setVerticalAxisTitle(getString(R.string.ModeRep));
         }
 
-        graph.getViewport().setXAxisBoundsManual(true); // pour ne pas sortir du graph mettre à false
-
-        //graph.getViewport().setMinX(date_min-200000000);
-        //graph.getViewport().setMaxX(date_max+200000000);
+        //Set the maximum and minimum value for the X axis
+        graph.getViewport().setXAxisBoundsManual(true);
         graph.getViewport().setMinX(series.getLowestValueX()-200000000);
         graph.getViewport().setMaxX(series.getHighestValueX()+200000000);
 
-        graph.getViewport().setYAxisBoundsManual(true);
+        //Set the maximum and minimum value for the Y axis and adjust automatically Y axis
+        graph.getViewport().setYAxisBoundsManual(false);
         graph.getViewport().setMinY(0);
         graph.getViewport().setMaxY(series.getHighestValueY()+10);
 
+        // Set the option to scale the X axis and allow to scroll
         graph.getViewport().setScalable(true);
         graph.getViewport().setScrollable(true);
-        //graph.getViewport().setScalableY(false);
 
+        // Set the color of the boarder
         graph.getViewport().setBorderColor(Color.BLACK);
         graph.getViewport().setDrawBorder(false);
 
-        //graph.getViewport().setMaxXAxisSize(100);
 
         // as we use dates as labels, the human rounding to nice readable numbers
         // is not necessary
         graph.getGridLabelRenderer().setHumanRounding(false);
 
-        //textSport = myView.findViewById(R.id.textSport);
+        //Set the corresponding sport image
         sportImage=myView.findViewById(R.id.imageSport);
         switch(setSport) {
             case 0:
-                //textSport.setText("ABDOS");
                 series.setColor(COLOR_ABDO);
                 sportImage.setImageResource(R.drawable.abdos);
                 break;
             case 1:
-                //textSport.setText("DORSEAUX");
                 series.setColor(COLOR_DORSEAU);
                 sportImage.setImageResource(R.drawable.dorsaux);
                 break;
             case 2:
-                //textSport.setText("CORDE");
                 series.setColor(COLOR_CORDE);
                 sportImage.setImageResource(R.drawable.corde_sauter);
                 break;
             case 3:
-                //textSport.setText("SQUATS");
                 series.setColor(COLOR_SQUAT);
                 sportImage.setImageResource(R.drawable.squats);
                 break;
@@ -198,10 +152,11 @@ public class SportFragment extends Fragment {
                 //Do Something
         }
 
+        //Set the space between to date
         series.setSpacing(10); //10
-        // draw values on top
+
+        //Draw values on top
         series.setDrawValuesOnTop(true);
-        //series.setAnimated(true);
         series.setValuesOnTopColor(Color.DKGRAY);
         series.setValuesOnTopSize(20);
 
@@ -246,7 +201,6 @@ public class SportFragment extends Fragment {
             default:
                 //Do Something
         }
-        //getActivity().setTitle("Sport History: "+"Abdo");
     }
 
     public void setSport(Integer sport) {

@@ -59,7 +59,6 @@ public class EmailPasswordActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emailpassword);
 
-        //************************************************************************************
         //  Declare a new thread to do a preference check
         Thread t = new Thread(new Runnable() {
             @Override
@@ -108,7 +107,6 @@ public class EmailPasswordActivity extends BaseActivity implements
 
         // Start the thread
         t.start();
-        //************************************************************************************
 
         // Views
         mStatusTextView = findViewById(R.id.status);
@@ -216,16 +214,6 @@ public class EmailPasswordActivity extends BaseActivity implements
                     }
                 });
         // [END sign_in_with_email]
-
-        // Login effectué, démarrage des fonctions de sports
-        //logged = true;
-        /*if(logged_failed=true) {
-        startActivity(new Intent(EmailPasswordActivity.this, MainActivity.class));
-        finish();
-            //this.finish(); //ESSAI
-            //startActivity(EmailPasswordActivity.intentAct);
-        }*/
-
     }
 
     public void getSignOut() {
@@ -301,16 +289,6 @@ public class EmailPasswordActivity extends BaseActivity implements
         if (user != null) {
             startActivity(new Intent(EmailPasswordActivity.this, MainActivity.class));
             finish();
-
-            /*mStatusTextView.setText(getString(R.string.emailpassword_status_fmt,
-                    user.getEmail(), user.isEmailVerified()));
-            mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
-
-            findViewById(R.id.email_password_buttons).setVisibility(View.GONE);
-            findViewById(R.id.email_password_fields).setVisibility(View.GONE);
-            findViewById(R.id.signed_in_buttons).setVisibility(View.VISIBLE);
-
-            findViewById(R.id.verify_email_button).setEnabled(!user.isEmailVerified());*/
         } else {
             mStatusTextView.setText(R.string.signed_out);
             mDetailTextView.setText(null);

@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,9 +44,7 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
     private RadioButton buttonRep;
     private RadioButton buttonTime;
     private boolean first = true;
-    private TextView text;
     PieChart pieChart;
-
 
     private OnFragmentInteractionListener mListener;
 
@@ -66,7 +63,6 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
         // Inflate the layout for this fragment
         myView=inflater.inflate(R.layout.fragment_global, container, false);
 
-        //processGETRequest();
         buttonRep = myView.findViewById(R.id.radioButton2);
         buttonTime = myView.findViewById(R.id.radioButton);
 
@@ -111,58 +107,41 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
         //-----------------------------------------------------------------------------------
         pieChart = myView.findViewById(R.id.piechart);
         pieChart.setTouchEnabled(true);
-        pieChart.setUsePercentValues(true); //Converti en pourcentage
-        pieChart.getDescription().setEnabled(false); //Text dans le chart
-        //pieChart.setDrawEntryLabels(false);
+        pieChart.setUsePercentValues(true); //Convert in percent
+        pieChart.getDescription().setEnabled(false);
         pieChart.setDrawEntryLabels(true);//Text dans le chart
         pieChart.setEntryLabelColor(Color.rgb(33, 33, 33));
         pieChart.setEntryLabelTextSize(15);
-        //pieChart.setExtraOffsets(5, 10, 5, 5);
-        pieChart.setExtraOffsets(10, 0, 10, 0); //Centrage du cercle dans la zone
+        pieChart.setExtraOffsets(10, 0, 10, 0); //Centering the circle.
         pieChart.setHoleRadius(20);
 
         pieChart.setDragDecelerationFrictionCoef(0.95f);
 
         pieChart.setDrawHoleEnabled(true);
-        //pieChart.setHoleColor(Color.BLACK);
         pieChart.setHoleColor(Color.DKGRAY);
-        pieChart.setTransparentCircleRadius(35f); //transparence du cercle
-        //pieChart.setTransparentCircleRadius(0f);
+        pieChart.setTransparentCircleRadius(35f); //Circle transparency
 
         ArrayList<PieEntry> yValues = new ArrayList<>();
-        /*yValues.add(new PieEntry(43f,"Abdo")); //x=0 dans higlight
-        yValues.add(new PieEntry(23f, "Dorseaux"));//x=1 dans higlight
-        yValues.add(new PieEntry(67f, "Corde"));//x=2 dans higlight
-        yValues.add(new PieEntry(35f, "Squat"));//x=3 dans higlight*/
 
-        //while(AbdosNum == "null" );
         yValues.add(new PieEntry(Float.parseFloat(MainActivity.AbdosNum), getString(R.string.Abdos))); //x=0 dans higlight
         yValues.add(new PieEntry(Float.parseFloat(MainActivity.DorseauxNum), getString(R.string.Dorsaux)));//x=1 dans higlight
         yValues.add(new PieEntry(Float.parseFloat(MainActivity.CordesNum), getString(R.string.Corde)));//x=2 dans higlight
         yValues.add(new PieEntry(Float.parseFloat(MainActivity.SquatsNum), getString(R.string.Squats)));//x=3 dans higlight
 
-        //yValues.add(new PieEntry(40f, "partye"));
-        //yValues.add(new PieEntry(23f, "partyf"));
-
         PieDataSet dataSet = new PieDataSet(yValues, "");
         dataSet.setSliceSpace(5f);
         dataSet.setSelectionShift(5f);
-        //dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
         dataSet.setColors(COLORS_PERFAPP);
 
 
         PieData data = new PieData((dataSet));
         data.setValueTextSize(21f);
-        //data.setValueTextColor(Color.TRANSPARENT);
-        //data.setValueTextColor(Color.rgb(33, 33, 33));
         data.setValueTextColor(Color.WHITE);
 
         pieChart.setData(data);
-        pieChart.getLegend().setEnabled(false); //Enlever la légende
+        pieChart.getLegend().setEnabled(false); //Remove Legend
         pieChart.setOnChartValueSelectedListener(this);
-
-        //text = myView.findViewById(R.id.sport);
-
+        
         return myView;
     }
 

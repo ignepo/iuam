@@ -38,14 +38,9 @@ import java.util.Date;
 public class RecapFragment extends Fragment implements OnChartValueSelectedListener{
     View myView;
     GraphView bargraph;
-    private Button goAbdoTime;
-    String TAG = "TestApp";
-
     public static ArrayList<SessionItem> AllSessionListRecap;
 
-
     private BarChart mChart;
-    private SeekBar mSeekBarX, mSeekBarY;
 
     public static final int[] COLORS_PERFAPP = {
             Color.rgb(241, 3, 138), //#f1038a abdo
@@ -53,7 +48,6 @@ public class RecapFragment extends Fragment implements OnChartValueSelectedListe
             Color.rgb(61, 33, 233),//#3d21e9 cordes
             Color.rgb(7, 200, 227)//#07C8E3 squats
     };
-
 
     private OnFragmentInteractionListener mListener;
 
@@ -75,13 +69,12 @@ public class RecapFragment extends Fragment implements OnChartValueSelectedListe
             myView = inflater.inflate(R.layout.fragment_recap, container, false);
         }
 
-        mChart = (BarChart) myView.findViewById(R.id.BarChart);
+        mChart = myView.findViewById(R.id.BarChart);
         mChart.setOnChartValueSelectedListener(this);
 
         mChart.getDescription().setEnabled(false);
 
-        // if more than 15 entries are displayed in the chart, no values will be
-        // drawn
+        // if more than 15 entries are displayed in the chart, no values will be drawn
         mChart.setMaxVisibleValueCount(15);
 
         // scaling can now only be done on x- and y-axis separately
@@ -103,26 +96,16 @@ public class RecapFragment extends Fragment implements OnChartValueSelectedListe
         xLabels.setPosition(XAxis.XAxisPosition.TOP);
         xLabels.setValueFormatter(new MyXAxisValueFormatter(mChart));
 
-
-        //*************************************************************************************
         ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
-
-        //for (int i = 0; i < mSeekBarX.getProgress() + 1; i++) {
 
         float val1;
         float val2;
         float val3;
         float val4;
 
-
+        //Set the data for the multiplBarChard with the AllSessionList
         for (SessionItem session: AllSessionListRecap) {
-            //date[i] = new Date(session.getYear(), session.getMonth(), session.getDay());
-            //calendar.getTimeinMilis();
-            //int date = 731+i;
             Date date = new Date(session.getYear(), session.getMonth()-1, session.getDay()); //faire month-1
-            //getDay(date)
-            //Date date = new Date(2018, 6, i+1);
-            //float mult = 50;
             if(MainActivity.Time_nRep)
             {
                 val1 = session.getTimeAbdos();
@@ -138,7 +121,7 @@ public class RecapFragment extends Fragment implements OnChartValueSelectedListe
                 val4 = session.getRepSquats();
             }
 
-
+            //The date is a little bit tricky to set...
             yVals1.add(new BarEntry(
                     getDay(date)+731, //731=2018 // 367 = 2017 // 0=2016
                     new float[]{val1, val2, val3, val4})); //ESSAI
@@ -170,8 +153,8 @@ public class RecapFragment extends Fragment implements OnChartValueSelectedListe
 
         mChart.setFitBars(true);
         mChart.invalidate();
-        //*************************************************************************************
 
+        //Set all the parameter for the legend
         Legend l = mChart.getLegend();
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
         l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
@@ -180,8 +163,6 @@ public class RecapFragment extends Fragment implements OnChartValueSelectedListe
         l.setFormSize(8f);
         l.setFormToTextSpace(4f);
         l.setXEntrySpace(6f);
-
-// mChart.setDrawLegend(false);
 
         return myView;
     }
@@ -239,10 +220,8 @@ public class RecapFragment extends Fragment implements OnChartValueSelectedListe
 
     private int[] getColors() {
 
-        int stacksize = 4;
-
         // have as many colors as stack-values per entry
-        int[] colors = new int[stacksize];
+        int[] colors ;
 
         colors = COLORS_PERFAPP;
 
