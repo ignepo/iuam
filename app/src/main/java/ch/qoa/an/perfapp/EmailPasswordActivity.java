@@ -301,7 +301,6 @@ public class EmailPasswordActivity extends BaseActivity implements
         if (user != null) {
             startActivity(new Intent(EmailPasswordActivity.this, MainActivity.class));
             finish();
-            Log.i(TAG, "updateUI: ****************************************************************");
 
             /*mStatusTextView.setText(getString(R.string.emailpassword_status_fmt,
                     user.getEmail(), user.isEmailVerified()));

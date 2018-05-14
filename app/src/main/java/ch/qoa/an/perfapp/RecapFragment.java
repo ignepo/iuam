@@ -122,7 +122,6 @@ public class RecapFragment extends Fragment implements OnChartValueSelectedListe
             Date date = new Date(session.getYear(), session.getMonth()-1, session.getDay()); //faire month-1
             //getDay(date)
             //Date date = new Date(2018, 6, i+1);
-            Log.i(TAG, "onCreateView: "+getDay(date));
             //float mult = 50;
             if(MainActivity.Time_nRep)
             {
@@ -230,11 +229,6 @@ public class RecapFragment extends Fragment implements OnChartValueSelectedListe
     public void onValueSelected(Entry e, Highlight h) {
 
         BarEntry entry = (BarEntry) e;
-
-        if (entry.getYVals() != null)
-            Log.i("VAL SELECTED", "Value: " + entry.getYVals()[h.getStackIndex()]);
-        else
-            Log.i("VAL SELECTED", "Value: " + entry.getY());
     }
 
     @Override

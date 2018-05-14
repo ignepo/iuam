@@ -65,7 +65,6 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         myView=inflater.inflate(R.layout.fragment_global, container, false);
-        Log.i(TAG, "onCreanteView: ********FRAGMENT*********");
 
         //processGETRequest();
         buttonRep = myView.findViewById(R.id.radioButton2);
@@ -169,8 +168,6 @@ public class GlobalFragment extends Fragment implements OnChartValueSelectedList
 
     @Override
     public void onValueSelected(Entry e, Highlight h) {
-        Log.i(TAG, "onValueSelected e: *****************"+e);
-        Log.i(TAG, "onValueSelected h: *****************"+h.getX());
         mListener.onGlobalFragmentInteraction((int)(h.getX()));
     }
 

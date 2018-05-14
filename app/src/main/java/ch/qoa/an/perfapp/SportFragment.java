@@ -89,7 +89,6 @@ public class SportFragment extends Fragment {
 
         for (SportItem session: SessionList) {
             date[i] = new Date(session.getYear(), session.getMonth(), session.getDay());
-            Log.i(TAG, "onCreateView********************************: "+date[i]);
             if(MainActivity.Time_nRep)
             {
                 values[i] = new DataPoint(date[i], session.getTime());

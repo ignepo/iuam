@@ -135,8 +135,6 @@ public class MainActivity
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
 
-        Log.i(TAG, "isNetworkAvailable#############################: " + activeNetworkInfo);
-
         return activeNetworkInfo != null;
 
     }
@@ -276,7 +274,7 @@ public class MainActivity
     //---------------------------------------------------------------------------------
     private void processGETRequest_TimeHist() {
 
-        Utils.processRequest(this, Request.Method.GET, "/sports/2", null,
+        Utils.processRequest(this, Request.Method.GET, "/sports/1", null,
                 new Utils.VolleyCallback() {
 
                     @Override
@@ -292,11 +290,6 @@ public class MainActivity
                                 DorseauxNum=StationK.getString("Dorsaux_time");
                                 SquatsNum=StationK.getString("Squats_time");
                                 CordesNum=StationK.getString("Corde_time");
-
-                                Log.i(TAG, "onSuccessResponse: Abdos : " + AbdosNum);
-                                Log.i(TAG, "onSuccessResponse: Dorseaux : " + DorseauxNum);
-                                Log.i(TAG, "onSuccessResponse: Squats : " + SquatsNum);
-                                Log.i(TAG, "onSuccessResponse: Cordes : " + CordesNum);
 
                                 FragmentTransaction fragTransaction =  getSupportFragmentManager().beginTransaction();
                                 //fragTransaction.add(R.id.fragment_container, globalFragment);
@@ -328,19 +321,12 @@ public class MainActivity
                             JSONArray sessions = result.getJSONArray("sessions");
                             for(int k=0; k<sessions.length(); k++)
                             {
-                                    //Log.i(TAG, "onSuccessResponse: GROSSE PROBLEM: ");
-
                                     JSONObject StationK = sessions.getJSONObject(k);
 
                                     AbdosNum=StationK.getString("Abdos");
                                     DorseauxNum=StationK.getString("Dorsaux");
                                     SquatsNum=StationK.getString("Squats");
                                     CordesNum=StationK.getString("Corde");
-
-                                    Log.i(TAG, "onSuccessResponse: Abdos : " + AbdosNum);
-                                    Log.i(TAG, "onSuccessResponse: Dorseaux : " + DorseauxNum);
-                                    Log.i(TAG, "onSuccessResponse: Squats : " + SquatsNum);
-                                    Log.i(TAG, "onSuccessResponse: Cordes : " + CordesNum);
 
                                     FragmentTransaction fragTransaction =  getSupportFragmentManager().beginTransaction();
                                     fragTransaction.detach(globalFragment);
@@ -447,12 +433,10 @@ public class MainActivity
 
                             for(int k=0; k<sessions.length(); k++)
                             {
-                                Log.i(TAG, "onSuccessResponse: *************ESSAI1");
                                 JSONObject SessionK = sessions.getJSONObject(k);
 
                                 initListAll(SessionK);
                             }
-                            Log.i(TAG, "onSuccessResponse: *************ESSAI2");
                             callFragment(recapFragment, "Recap");
                             /*FragmentTransaction fragTransaction =  getSupportFragmentManager().beginTransaction();
                             fragTransaction.detach(abdotimeFragment);
@@ -571,12 +555,6 @@ public class MainActivity
             Integer Month = Integer.parseInt(DateS[1]);
             Integer Day = Integer.parseInt(DateS[2]);
 
-
-            Log.i(TAG, "onSuccessResponse: Value : " + Value);
-            Log.i(TAG, "onSuccessResponse: Year : " + Year);
-            Log.i(TAG, "onSuccessResponse: Month : " + Month);
-            Log.i(TAG, "onSuccessResponse: Day : " + Day);
-
             SportItem DorsauxSession = new SportItem();
 
             DorsauxSession.setRep(Value);
@@ -611,12 +589,6 @@ public class MainActivity
             Integer  SquatsTimeValue = Integer.parseInt(sessionK.getString("Squats_time"));
 
             String  Date = sessionK.getString("date");
-
-            Log.i(TAG, "initListAll: "+Date);
-            //Log.i(TAG, "initListAll abdo: "+AbdosValue);
-            Log.i(TAG, "initListAll dorsaux: "+DoresauxValue);
-            //Log.i(TAG, "initListAll corde: "+CordeValue);
-            //Log.i(TAG, "initListAll squat: "+SquatsValue);
 
             String[] DateS = Date.split("-");
             Integer Year = Integer.parseInt(DateS[0]);
@@ -676,12 +648,10 @@ public class MainActivity
                         processGETRequest_RepHist(); //ESSAI
                     }
 
-                    Log.i(TAG, "onReceive: ****************************************internet OK");
                 } else {
                     snackbar.setDuration(Snackbar.LENGTH_INDEFINITE);
                     snackbar.show();
                     noInternet = true;
-                    Log.i(TAG, "onReceive: ****************************************internet KO");
                 }
 
             } catch (Exception e) {
