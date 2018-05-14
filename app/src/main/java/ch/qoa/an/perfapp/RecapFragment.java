@@ -124,7 +124,7 @@ public class RecapFragment extends Fragment implements OnChartValueSelectedListe
             //The date is a little bit tricky to set...
             yVals1.add(new BarEntry(
                     getDay(date)+731, //731=2018 // 367 = 2017 // 0=2016
-                    new float[]{val1, val2, val3, val4})); //ESSAI
+                    new float[]{val1, val2, val3, val4}));
         }
 
         BarDataSet set1;

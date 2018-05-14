@@ -637,11 +637,11 @@ public class MainActivity
                     noInternet=false;
                     if(Time_nRep)
                     {
-                        processGETRequest_TimeHist(); //ESSAI
+                        processGETRequest_TimeHist();
                     }
                     else
                     {
-                        processGETRequest_RepHist(); //ESSAI
+                        processGETRequest_RepHist();
                     }
 
                 } else {
