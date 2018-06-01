@@ -69,7 +69,7 @@ public class SportFragment extends Fragment {
 
         //Fill the data for the barChart with le SessionList
         for (SportItem session: SessionList) {
-            date[i] = new Date(session.getYear(), session.getMonth(), session.getDay());
+            date[i] = new Date(session.getYear(), session.getMonth()-1, session.getDay());
             if(MainActivity.Time_nRep)
             {
                 values[i] = new DataPoint(date[i], session.getTime());
